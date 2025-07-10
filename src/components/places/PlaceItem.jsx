@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../Button";
 import Modal from "../Modal";
+import Map from "../Map";
 
 function PlaceItem({
   image,
@@ -54,8 +55,8 @@ function PlaceItem({
         onClose={() => setIsMapOpen(false)}
         title={address}
       >
-        <div className="w-full h-64">
-          <div>The map </div>
+        <div className="w-full h-64 relative">
+          <Map location={location} />
         </div>
       </Modal>
     </>
