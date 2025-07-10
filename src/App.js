@@ -1,7 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import Applayout from "./Applayout";
 import User from "./pages/User";
-
 import Places from "./pages/Places";
 import UserPlaces from "./pages/UserPlaces";
 import NewPlace from "./components/places/NewPlace";
