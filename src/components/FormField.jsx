@@ -10,6 +10,7 @@ function FormField({
   maxLength,
   showError = false,
   error = "",
+  disabled = false,
 }) {
   const commonClasses = `bg-gray-50 border ${
     error && showError ? "border-red-500" : "border-gray-300"
@@ -26,12 +27,13 @@ function FormField({
       {textarea ? (
         <textarea
           id={id}
-          className={commonClasses}
+          className={`${commonClasses} h-32`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
           minLength={minLength}
           maxLength={maxLength}
+          disabled={disabled}
         />
       ) : (
         <input
@@ -43,6 +45,7 @@ function FormField({
           onChange={onChange}
           minLength={minLength}
           maxLength={maxLength}
+          disabled={disabled}
         />
       )}
       {error && showError && (
