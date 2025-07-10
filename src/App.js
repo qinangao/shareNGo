@@ -4,6 +4,7 @@ import User from "./pages/User";
 import Places from "./pages/Places";
 import UserPlaces from "./pages/UserPlaces";
 import NewPlace from "./components/places/NewPlace";
+import UpdatePlace from "./pages/UpdatePlace";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: "/:userId/places", element: <UserPlaces /> },
       { path: "/places", element: <Places /> },
       { path: "/places/new", element: <NewPlace /> },
+      { path: "/places/:placeId", element: <UpdatePlace /> },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },
