@@ -2,8 +2,10 @@ import { useState } from "react";
 import Button from "../Button";
 import Modal from "../Modal";
 import Map from "../Map";
+import { Link } from "react-router";
 
 function PlaceItem({
+  id,
   image,
   title,
   address,
@@ -43,7 +45,9 @@ function PlaceItem({
             <p className="mb-3 font-normal text-gray-700">{description}</p>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              <Button variant="primary">Edit</Button>
+              <Link to={`/places/${id}`}>
+                <Button variant="primary">Edit</Button>
+              </Link>
               <Button variant="default">Delete</Button>
             </div>
           </div>
