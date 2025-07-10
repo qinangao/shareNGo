@@ -4,7 +4,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
   return (
     <div
       className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50"
-      aria-hidden="true"
+      aria-hidden="false"
     >
       <div className="relative p-4 w-full max-w-2xl max-h-full">
         <div className="relative bg-white rounded-lg shadow-sm">
@@ -22,7 +22,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
                 fill="none"
                 viewBox="0 0 14 14"
                 xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
+                aria-hidden="false"
               >
                 <path
                   stroke="currentColor"
@@ -37,7 +37,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
           </div>
 
           {/* Body */}
-          <div className="p-4 md:p-5">{children}</div>
+          <div className="p-2 md:p-5">{children}</div>
         </div>
       </div>
     </div>
