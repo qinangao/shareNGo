@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+@layer base {
+}
+
+@layer utilities {
+  .error_container {
+    @apply flex justify-center items-center min-h-[200px] px-4 py-8;
+  }
+  .container {
+    @apply w-full mx-auto px-4 py-6;
+  }
+}
