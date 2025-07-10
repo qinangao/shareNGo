@@ -1,75 +1,19 @@
-import { useState } from "react";
 import FormField from "../FormField";
-import { validateField } from "../../utils/helper";
 import { fieldValidation } from "../../utils/constants";
+import useFormHandler from "../hooks/useFormHandler";
 
 function NewPlace() {
-  const [formData, setFormData] = useState({
-    title: "",
-    address: "",
-    description: "",
-  });
-
-  const [errors, setErrors] = useState({});
-  const [showErrors, setShowErrors] = useState(false);
-
-  function validateForm() {
-    const newErrors = {};
-    let isValid = true;
-
-    Object.keys(formData).forEach((field) => {
-      const error = validateField(field, formData[field]);
-      if (error) {
-        newErrors[field] = error;
-        isValid = false;
-      }
+  const { formData, errors, showErrors, handleChange, handleSubmit } =
+    useFormHandler({
+      title: "",
+      address: "",
+      description: "",
     });
-
-    setErrors(newErrors);
-    return isValid;
-  }
-
-  function handleChange(e) {
-    const { id, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-
-    if (showErrors && errors[id]) {
-      setErrors((prev) => ({
-        ...prev,
-        [id]: validateField(id, value),
-      }));
-    }
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setShowErrors(true);
-
-    if (validateForm()) {
-      console.log("Form submitted successfully:", formData);
-      // Here you could send it to an API or handle it however you need
-
-      // Reset form after successful submission
-      setFormData({
-        title: "",
-        address: "",
-        description: "",
-      });
-      setErrors({});
-      setShowErrors(false);
-    } else {
-      console.log("Form validation failed");
-    }
-  }
 
   return (
     <div className="max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-900">Add New Place</h2>
-
-      <div>
+      <form>
         <FormField
           label="Title"
           id="title"
@@ -114,7 +58,7 @@ function NewPlace() {
         >
           Add place
         </button>
-      </div>
+      </form>
     </div>
   );
 }
