@@ -11,7 +11,7 @@ const DUMMY_PLACES = [
     description:
       "South Park is a friendly neighbourhood in Macclesfield, England, known for its community spirit and walkability.",
     creator: "u1",
-    coordinates: { lat: 53.2509364, lng: -2.1320182 },
+    location: { lat: 53.2509364, lng: -2.1320182 },
   },
   {
     id: "p2",
@@ -22,7 +22,7 @@ const DUMMY_PLACES = [
     description:
       "South Park is a friendly neighbourhood in Macclesfield, England, known for its community spirit and walkability.",
     creator: "u2",
-    coordinates: { lat: 53.2509364, lng: -2.1320182 },
+    location: { lat: 53.2509364, lng: -2.1320182 },
   },
 ];
 
