@@ -33,7 +33,6 @@ const DUMMY_PLACES = [
 
 function UpdatePlace() {
   const { placeId } = useParams();
-  const currentPlace = DUMMY_PLACES.find((item) => item.id === placeId);
 
   const {
     formData,
@@ -47,6 +46,8 @@ function UpdatePlace() {
     address: "",
     description: "",
   });
+
+  const currentPlace = DUMMY_PLACES.find((item) => item.id === placeId);
 
   // Load existing data into the form
   useEffect(() => {
@@ -69,7 +70,7 @@ function UpdatePlace() {
   // If no matching place is found
   if (!currentPlace) {
     return (
-      <div className="text-center text-red-600 py-10">
+      <div className="error_container">
         <h2 className="text-xl font-semibold">Could not find the place!</h2>
       </div>
     );
