@@ -3,6 +3,7 @@ import Button from "../Button";
 import Modal from "../Modal";
 import Map from "../Map";
 import { Link } from "react-router";
+import LinkButton from "../LinkButton";
 
 function PlaceItem({
   id,
@@ -41,12 +42,9 @@ function PlaceItem({
             </h5>
             <div>
               <p className="text-sm text-gray-600 mb-1">{address}</p>
-              <button
-                onClick={() => setIsMapOpen(true)}
-                className="font-medium text-blue-600 hover:underline"
-              >
+              <LinkButton onClick={() => setIsMapOpen(true)}>
                 View on map
-              </button>
+              </LinkButton>
             </div>
             <p className="mb-3 font-normal text-gray-700">{description}</p>
 
