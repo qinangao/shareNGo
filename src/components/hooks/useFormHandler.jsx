@@ -45,6 +45,10 @@ function useFormHandler(initialState) {
     }
   };
 
+  const resetError = () => {
+    setErrors({});
+  };
+
   return {
     formData,
     setFormData,
@@ -52,6 +56,7 @@ function useFormHandler(initialState) {
     showErrors,
     handleChange,
     handleSubmit,
+    resetError,
   };
 }
 
