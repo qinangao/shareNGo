@@ -17,5 +17,9 @@ export const validateField = (fieldName, value) => {
     return `Maximum ${validation.maxLength} characters allowed.`;
   }
 
+  if (validation.pattern && !validation.pattern.test(value)) {
+    return "Invalid format.";
+  }
+
   return "";
 };
