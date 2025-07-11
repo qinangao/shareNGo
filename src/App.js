@@ -5,7 +5,6 @@ import Places from "./pages/Places";
 import UserPlaces from "./pages/UserPlaces";
 import NewPlace from "./components/places/NewPlace";
 import UpdatePlace from "./pages/UpdatePlace";
-import LoginPage from "./pages/LoginPage";
 import Auth from "./pages/Auth";
 
 const router = createBrowserRouter([
