@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import Map from "../Map";
 import { Link } from "react-router";
 import LinkButton from "../LinkButton";
+import { useAuth } from "../../hooks/useAuth";
 
 function PlaceItem({
   id,
@@ -16,6 +17,7 @@ function PlaceItem({
 }) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   function handleDelete() {
     console.log("delete");
@@ -37,7 +39,7 @@ function PlaceItem({
 
           {/* Content Section */}
           <div className="p-5 flex flex-col space-y-4 w-full">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+            <h5 className="text-2xl font-bold tracking-tight text-gray-900">
               {title}
             </h5>
             <div>
@@ -48,14 +50,16 @@ function PlaceItem({
             </div>
             <p className="mb-3 font-normal text-gray-700">{description}</p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Link to={`/places/${id}`}>
-                <Button variant="primary">Edit</Button>
-              </Link>
-              <Button variant="default" onClick={() => setIsDelete(true)}>
-                Delete
-              </Button>
-            </div>
+            {isLoggedIn && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link to={`/places/${id}`}>
+                  <Button variant="primary">Edit</Button>
+                </Link>
+                <Button variant="default" onClick={() => setIsDelete(true)}>
+                  Delete
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </li>
