@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validateField } from "../../utils/helper";
+import { validateField } from "../utils/helper";
 
 function useFormHandler(initialState) {
   const [formData, setFormData] = useState(initialState);
@@ -38,8 +38,19 @@ function useFormHandler(initialState) {
     e.preventDefault();
     setShowErrors(true);
 
+    // console.log("Form submitted - Form Data:", formData);
+    // console.log("Validation starting...");
+
     if (validateForm()) {
-      onValidSubmit(formData);
+      // console.log("Validation passed!");
+      // console.log("Calling onValidSubmit with data:", formData);
+
+      // Make sure onValidSubmit is a function before calling it
+      if (typeof onValidSubmit === "function") {
+        onValidSubmit(formData);
+      } else {
+        console.warn("onValidSubmit is not a function:", onValidSubmit);
+      }
     } else {
       console.log("Validation failed", errors);
     }
