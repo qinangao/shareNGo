@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
 import { NavLink } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn, login, logout } = useAuth();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -66,21 +68,35 @@ const Navbar = () => {
                 Community
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/places" className={getNavLinkClass}>
-                My Places
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/places/new">
-                <Button variant="primary">Add Place</Button>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/auth">
-                <Button variant="default">Login</Button>
-              </NavLink>
-            </li>
+            {isLoggedIn && (
+              <li>
+                <NavLink to="/u1/places" className={getNavLinkClass}>
+                  My Places
+                </NavLink>
+              </li>
+            )}
+            {isLoggedIn && (
+              <li>
+                <NavLink to="/places/new">
+                  <Button variant="primary">Add Place</Button>
+                </NavLink>
+              </li>
+            )}
+            {!isLoggedIn && (
+              <li>
+                <NavLink to="/auth">
+                  <Button variant="primary">Login</Button>
+                </NavLink>
+              </li>
+            )}
+
+            {isLoggedIn && (
+              <li>
+                <Button variant="default" onClick={logout}>
+                  Logout
+                </Button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
