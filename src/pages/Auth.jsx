@@ -1,16 +1,20 @@
 import { useState } from "react";
 import FormField from "../components/FormField";
-import useFormHandler from "../components/hooks/useFormHandler";
+import useFormHandler from "../hooks/useFormHandler";
 import { fieldValidation } from "../utils/constants";
-
 import Button from "../components/Button";
 import LinkButton from "../components/LinkButton";
 import { validateField } from "../utils/helper";
+import { useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 function Auth() {
   const [authError, setAuthError] = useState("");
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
+
+  const navigate = useNavigate();
 
   // Initialize form data based on current mode
   const getInitialFormData = () => {
@@ -53,28 +57,13 @@ function Auth() {
         password: "",
       });
     }
-
-    // Option 2: Keep email and password, clear username (comment out Option 1 and uncomment this)
-    // if (newMode) {
-    //   // Switching to login mode - keep email and password, remove username
-    //   setFormData({
-    //     email: formData.email || "",
-    //     password: formData.password || ""
-    //   });
-    // } else {
-    //   // Switching to register mode - add username field, keep email and password
-    //   setFormData({
-    //     username: "",
-    //     email: formData.email || "",
-    //     password: formData.password || ""
-    //   });
-    // }
   }
 
   async function onLogin(data) {
     try {
       resetError();
       setAuthError("");
+      setIsLoading(true);
 
       // Validate fields using your custom validation
       const emailError = validateField("email", data.email);
@@ -85,6 +74,8 @@ function Auth() {
       }
 
       if (data.email === "admin@example.com" && data.password === "admin123") {
+        login();
+        navigate("/places");
         console.log("Login successful:", data);
         // Redirect user or update app state here
         // Example: navigate('/dashboard') or setUser(userData)
@@ -93,6 +84,8 @@ function Auth() {
       }
     } catch (err) {
       setAuthError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -100,6 +93,7 @@ function Auth() {
     try {
       resetError();
       setAuthError("");
+      setIsLoading(true);
 
       // Validate fields using your custom validation
       const usernameError = validateField("username", data.username);
@@ -128,6 +122,8 @@ function Auth() {
       setFormData({ email: data.email, password: "" });
     } catch (err) {
       setAuthError(err.message || "Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
