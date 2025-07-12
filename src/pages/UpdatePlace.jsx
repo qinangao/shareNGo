@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import Button from "../components/Button";
 import FormField from "../components/FormField";
 import { fieldValidation } from "../utils/constants";
-import useFormHandler from "../components/hooks/useFormHandler";
+import useFormHandler from "../hooks/useFormHandler";
 
 // Dummy data for demonstration
 const DUMMY_PLACES = [
