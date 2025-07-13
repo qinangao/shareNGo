@@ -7,9 +7,7 @@ function Avatar({ name, image, placeCount }) {
         className="w-12 h-12 rounded-full border-2 border-gray-100 shadow-sm hover:scale-105 transition-transform duration-200"
       />
       <div className="font-medium">
-        <h2 className="text-gray-900 hover:text-blue-600 transition-colors duration-200">
-          {name}
-        </h2>
+        <h2 className="text-dark-200 transition-colors duration-200">{name}</h2>
         <h3 className="text-sm text-gray-500">
           {placeCount} {placeCount === 1 ? "Place" : "Places"}
         </h3>

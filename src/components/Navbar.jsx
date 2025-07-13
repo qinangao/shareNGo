@@ -23,7 +23,7 @@ const Navbar = () => {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src="/assets/logo.png" className="h-8" alt="Flowbite Logo" />
+          <img src="/assets/logo.png" className="h-8" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
             ShareNGo
           </span>
