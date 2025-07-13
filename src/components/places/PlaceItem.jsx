@@ -99,10 +99,10 @@ function PlaceItem({
           not be undone thereafter.
         </p>
         <div className="flex justify-end gap-2 mb-2">
-          <Button variant="default" onClick={() => setIsDelete(false)}>
+          <Button variant="primary" onClick={() => setIsDelete(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleDelete}>
+          <Button variant="default" onClick={handleDelete}>
             Delete
           </Button>
         </div>

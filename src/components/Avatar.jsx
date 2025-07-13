@@ -1,6 +1,6 @@
 function Avatar({ name, image, placeCount }) {
   return (
-    <div className="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 cursor-pointer bg-white hover:bg-gray-50">
+    <div className="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-brand-50 transition-all duration-200 cursor-pointer bg-white hover:bg-gray-50">
       <img
         src={image}
         alt={name}

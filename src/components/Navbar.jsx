@@ -5,15 +5,15 @@ import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn, login, logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   const getNavLinkClass = ({ isActive }) =>
-    `py-2 px-4 text-gray-900 rounded-sm md:px-0 ${
-      isActive ? "text-blue-700" : "hover:text-blue-700"
+    `py-2 px-4 text-dark-100 rounded-sm md:px-0 ${
+      isActive ? "border-b-2 border-dark-100" : "hover:text-brand-300"
     }`;
 
   return (
@@ -23,11 +23,7 @@ const Navbar = () => {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
+          <img src="/assets/logo.png" className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
             ShareNGo
           </span>
@@ -62,7 +58,7 @@ const Navbar = () => {
           className={`${isOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
           id="navbar-default"
         >
-          <ul className="flex flex-col md:flex-row items-center gap-5 p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 md:border-0 rounded-lg bg-gray-50 md:bg-transparent">
+          <ul className="flex flex-col md:flex-row items-center justify-center gap-8 p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 md:border-0 rounded-lg bg-gray-50 md:bg-transparent">
             <li>
               <NavLink to="/user" className={getNavLinkClass}>
                 Community
@@ -75,28 +71,30 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-            {isLoggedIn && (
-              <li>
-                <NavLink to="/places/new">
-                  <Button variant="primary">Add Place</Button>
-                </NavLink>
-              </li>
-            )}
-            {!isLoggedIn && (
-              <li>
-                <NavLink to="/auth">
-                  <Button variant="primary">Login</Button>
-                </NavLink>
-              </li>
-            )}
+            <div className="flex justify-center items-center gap-4 md:gap-8">
+              {isLoggedIn && (
+                <li>
+                  <NavLink to="/places/new">
+                    <Button variant="primary">Add Place</Button>
+                  </NavLink>
+                </li>
+              )}
+              {!isLoggedIn && (
+                <li>
+                  <NavLink to="/auth">
+                    <Button variant="primary">Login</Button>
+                  </NavLink>
+                </li>
+              )}
 
-            {isLoggedIn && (
-              <li>
-                <Button variant="default" onClick={logout}>
-                  Logout
-                </Button>
-              </li>
-            )}
+              {isLoggedIn && (
+                <li>
+                  <Button variant="default" onClick={logout}>
+                    Logout
+                  </Button>
+                </li>
+              )}
+            </div>
           </ul>
         </div>
       </div>
