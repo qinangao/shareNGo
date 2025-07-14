@@ -1,11 +1,19 @@
-import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import FormField from "../components/FormField";
-import { fieldValidation } from "../utils/constants";
-import useFormHandler from "../hooks/useFormHandler";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 
-// Dummy data for demonstration
 const DUMMY_PLACES = [
   {
     id: "p1",
@@ -31,108 +39,120 @@ const DUMMY_PLACES = [
   },
 ];
 
+const formSchema = z.object({
+  title: z
+    .string()
+    .min(5, { message: "Title must be at least 5 characters" })
+    .max(50, { message: "Title must be at most 50 characters" }),
+  description: z
+    .string()
+    .min(5, { message: "Description must be at least 5 characters." })
+    .max(200, { message: "Description must be at most 200 characters." }),
+});
+
 function UpdatePlace() {
   const { placeId } = useParams();
-
-  const {
-    formData,
-    errors,
-    showErrors,
-    handleChange,
-    handleSubmit,
-    setFormData,
-  } = useFormHandler({
-    title: "",
-    address: "",
-    description: "",
-  });
-
+  const navigate = useNavigate();
   const currentPlace = DUMMY_PLACES.find((item) => item.id === placeId);
 
-  // Load existing data into the form
-  useEffect(() => {
-    if (currentPlace) {
-      setFormData({
-        title: currentPlace.title,
-        address: currentPlace.address,
-        description: currentPlace.description,
-      });
-    }
-  }, [currentPlace, setFormData]);
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: currentPlace?.title || "",
+      description: currentPlace?.description || "",
+    },
+  });
 
-  // Final submission logic
-  function onUpdateSubmit(updatedData) {
-    console.log("Updated Place Data:", updatedData);
-    // You could now send `updatedData` to your backend or API
-    // Example: api.updatePlace(placeId, updatedData)
-  }
-
-  // If no matching place is found
   if (!currentPlace) {
     return (
-      <div className="error_container">
-        <h2 className="text-xl font-semibold">Could not find the place!</h2>
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <h2 className="text-xl font-semibold text-gray-800">
+          Could not find the place!
+        </h2>
       </div>
     );
   }
 
+  const onSubmit = (values) => {
+    console.log("Updated Place:", values);
+
+    // Simulate API update delay
+    setTimeout(() => {
+      navigate(`/${currentPlace.creator}/places`);
+    }, 500);
+  };
+
   return (
-    <form
-      className="max-w-3xl mx-auto mt-10"
-      onSubmit={handleSubmit(onUpdateSubmit)}
-    >
-      <div className="flex flex-col bg-white border border-gray-200 rounded-2xl shadow-md overflow-hidden">
-        {/* Image */}
-        <div className="w-full h-64 sm:h-80 md:h-[22rem]">
-          <img
-            className="w-full h-full object-cover"
-            src={currentPlace.imageUrl}
-            alt={formData.title}
-          />
-        </div>
+    <div className="flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+        <h2 className="text-2xl font-bold mb-6 text-center">Update Place</h2>
+        <img
+          className="w-full h-full object-cover"
+          src={currentPlace.imageUrl}
+          alt={currentPlace.title}
+        />
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 mt-4"
+          >
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xl text-dark-100">Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Enter place title"
+                      className="border border-gray-300 rounded-md px-3 py-2"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-600 text-sm mt-1" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xl text-dark-100">
+                    Description
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      className="h-[180px] border border-gray-300 rounded-md px-3 py-2"
+                      placeholder="Describe the place..."
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-600 text-sm mt-1" />
+                </FormItem>
+              )}
+            />
 
-        {/* Form Content */}
-        <div className="p-6 sm:p-8 flex flex-col space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-800">Edit Place</h2>
-
-          <FormField
-            label="Title"
-            id="title"
-            value={formData.title}
-            onChange={handleChange}
-            minLength={fieldValidation.title.minLength}
-            maxLength={fieldValidation.title.maxLength}
-            showError={showErrors}
-            error={errors.title}
-          />
-
-          <FormField
-            label="Address"
-            id="address"
-            value={formData.address}
-            disabled={true}
-          />
-
-          <FormField
-            label="Description"
-            id="description"
-            textarea
-            value={formData.description}
-            onChange={handleChange}
-            minLength={fieldValidation.description.minLength}
-            maxLength={fieldValidation.description.maxLength}
-            showError={showErrors}
-            error={errors.description}
-          />
-
-          <div className="flex justify-end pt-4">
-            <Button type="submit" variant="default">
-              Update
-            </Button>
-          </div>
-        </div>
+            <div className="flex gap-4 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full font-semibold py-2 rounded-lg border border-gray-400 text-gray-700"
+                onClick={() => navigate(`/${currentPlace.creator}/places`)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="w-full font-semibold py-2 rounded-lg text-white transition"
+              >
+                Update
+              </Button>
+            </div>
+          </form>
+        </Form>
       </div>
-    </form>
+    </div>
   );
 }
 

@@ -9,41 +9,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 
 const loginSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
   password: z
     .string()
-    .min(5, {
-      message: "Password must be at least 5 characters.",
-    })
-    .max(20, {
-      message: "Password must be at most 20 characters.",
-    }),
+    .min(5, { message: "Password must be at least 5 characters." })
+    .max(20, { message: "Password must be at most 20 characters." }),
 });
 
 const signUpSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
+  username: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
   password: z
     .string()
-    .min(5, {
-      message: "Password must be at least 5 characters.",
-    })
-    .max(20, {
-      message: "Password must be at most 20 characters.",
-    }),
+    .min(5, { message: "Password must be at least 5 characters." })
+    .max(20, { message: "Password must be at most 20 characters." }),
 });
 
 function Auth() {
@@ -60,37 +47,32 @@ function Auth() {
     },
   });
 
-  function redirectToLogin(registeredEmail) {
+  const redirectToLogin = (registeredEmail) => {
     setIsSignUp(false);
     form.reset({
       username: "",
       email: registeredEmail,
       password: "",
     });
-  }
-  function toggleAuthMode() {
+  };
+
+  const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
     form.reset({
       username: "",
       email: "",
       password: "",
     });
-  }
-  //Fake login for testing:
+  };
 
   const fakeAuth = async (values) => {
     setIsLoading(true);
-    // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // Fake authentication logic
     if (isSignUp) {
-      // For signup, always succeed
-
       console.log("Sign up successful:", values);
       redirectToLogin(values.email);
     } else {
-      // For login, check credentials
       if (
         values.email === "test@example.com" &&
         values.password === "password123"
@@ -105,84 +87,104 @@ function Auth() {
     setIsLoading(false);
   };
 
-  function onSubmit(values) {
+  const onSubmit = (values) => {
     fakeAuth(values);
-  }
+  };
 
   return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {isSignUp && (
+    <div className="flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          {isSignUp ? "Create an Account" : "Login to Your Account"}
+        </h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {isSignUp && (
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-700 dark:text-gray-300">
+                      Username
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your username" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username:</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Email
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your username" {...field} />
+                    <Input placeholder="you@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          )}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-dark-100">Email:</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-dark-100">Password:</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Your password"
-                    {...field}
-                    type="password"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Loading..." : isSignUp ? "Sign Up" : "Login"}
-          </Button>
-        </form>
-      </Form>
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
-          {isSignUp ? "Already have an account?" : "Don't have an account?"}
-        </p>
-        <Button
-          variant="link"
-          onClick={toggleAuthMode}
-          className="text-blue-600 hover:text-blue-800"
-        >
-          {isSignUp ? "Login" : "Register"}
-        </Button>
-      </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full font-semibold py-2 rounded-xl transition"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : isSignUp ? "Sign Up" : "Login"}
+            </Button>
+          </form>
+        </Form>
 
-      {!isSignUp && (
-        <div className="mt-4 p-3 bg-gray-100 rounded text-sm text-gray-600">
-          <p className="font-medium">Test credentials:</p>
-          <p>Email: test@example.com</p>
-          <p>Password: password123</p>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}
+            <Button
+              variant="link"
+              onClick={toggleAuthMode}
+              className="ml-1 text-blue-600 hover:text-blue-800"
+            >
+              {isSignUp ? "Login" : "Register"}
+            </Button>
+          </p>
         </div>
-      )}
+
+        {!isSignUp && (
+          <div className="mt-4 bg-gray-100 p-4 rounded-lg text-sm text-gray-700">
+            <p className="font-medium mb-1">Test credentials:</p>
+            <p>
+              Email: <code>test@example.com</code>
+            </p>
+            <p>
+              Password: <code>password123</code>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
