@@ -3,11 +3,9 @@ import Avatar from "../Avatar";
 
 function UserItem({ id, image, name, placeCount }) {
   return (
-    <li className="w-full max-w-sm">
-      <Link to={`/${id}/places`}>
-        <Avatar image={image} name={name} placeCount={placeCount} />
-      </Link>
-    </li>
+    <Link to={`/${id}/places`} className="group block">
+      <Avatar image={image} name={name} placeCount={placeCount} />
+    </Link>
   );
 }
 

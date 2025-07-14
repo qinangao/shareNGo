@@ -70,7 +70,7 @@ body {
     @apply flex justify-center items-center min-h-[200px] px-4 py-8;
   }
   .container {
-    @apply w-full mx-auto px-4 py-6;
+    @apply w-full mx-auto px-4 md:py-12;
   }
   .text {
     @apply text-sm text-dark-100;
