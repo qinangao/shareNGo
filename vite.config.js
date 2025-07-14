@@ -1,10 +1,20 @@
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
-// https://vite.dev/config/
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "./src"),
+    },
+  },
   css: {
-    postcss: "./postcss.config.js", // This line might be needed
+    postcss: "./postcss.config.js",
   },
 });
