@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import Modal from "../Modal";
 import Map from "../Map";
 import { Link } from "react-router";
 import LinkButton from "../LinkButton";
