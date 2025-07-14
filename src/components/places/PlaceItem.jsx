@@ -1,5 +1,14 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import Button from "../Button";
 import Modal from "../Modal";
 import Map from "../Map";
 import { Link } from "react-router";
@@ -11,7 +20,7 @@ function PlaceItem({
   image,
   title,
   address,
-  creatorId,
+  // creatorId,
   location,
   description,
 }) {
@@ -53,9 +62,9 @@ function PlaceItem({
             {isLoggedIn && (
               <div className="mt-4 flex flex-wrap gap-2">
                 <Link to={`/places/${id}`}>
-                  <Button variant="primary">Edit</Button>
+                  <Button variant="default">Edit</Button>
                 </Link>
-                <Button variant="default" onClick={() => setIsDelete(true)}>
+                <Button variant="outline" onClick={() => setIsDelete(true)}>
                   Delete
                 </Button>
               </div>
@@ -64,49 +73,37 @@ function PlaceItem({
         </div>
       </li>
 
-      <Modal isOpen={isMapOpen}>
-        <div className="flex items-center justify-between pb-5 border-b">
-          <h3 className="text-lg font-semibold text-gray-900">{address}</h3>
-          <button
-            onClick={() => setIsMapOpen(false)}
-            className="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center"
-          >
-            <svg
-              className="w-3 h-3"
-              fill="none"
-              viewBox="0 0 14 14"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13"
-              />
-            </svg>
-            <span className="sr-only">Close modal</span>
-          </button>
-        </div>
-        <div className="h-64 w-full relative">
-          <Map location={location} />
-        </div>
-      </Modal>
+      <Dialog open={isMapOpen} onOpenChange={setIsMapOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="mb-4">{address}</DialogTitle>
+            <DialogDescription>
+              <div className="h-64 w-full relative">
+                <Map location={location} />
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
 
-      <Modal isOpen={isDelete}>
-        <p className="text-gray-800 mb-5 mt-2">
-          Are you sure you want to delete this place? Please notre that it can
-          not be undone thereafter.
-        </p>
-        <div className="flex justify-end gap-2 mb-2">
-          <Button variant="primary" onClick={() => setIsDelete(false)}>
-            Cancel
-          </Button>
-          <Button variant="default" onClick={handleDelete}>
-            Delete
-          </Button>
-        </div>
-      </Modal>
+      <Dialog open={isDelete} onOpenChange={setIsDelete}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="mb-2">Delete place</DialogTitle>
+            <DialogDescription>
+              This is your dialog description text.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-2">
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button variant="default" onClick={handleDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
