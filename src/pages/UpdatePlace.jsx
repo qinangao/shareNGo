@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
-import Button from "../components/Button";
+import { Button } from "@/components/ui/button";
 import FormField from "../components/FormField";
 import { fieldValidation } from "../utils/constants";
 import useFormHandler from "../hooks/useFormHandler";
@@ -126,7 +126,7 @@ function UpdatePlace() {
           />
 
           <div className="flex justify-end pt-4">
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="default">
               Update
             </Button>
           </div>

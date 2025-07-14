@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "./Button";
+import { Button } from "@/components/ui/button";
 import { NavLink } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   const getNavLinkClass = ({ isActive }) =>
-    `py-2 px-4 text-dark-100 rounded-sm md:px-0 ${
+    `py-2 px-4 text-dark-100 md:px-0 ${
       isActive ? "border-b-2 border-dark-100" : "hover:text-brand-300"
     }`;
 
@@ -75,21 +75,21 @@ const Navbar = () => {
               {isLoggedIn && (
                 <li>
                   <NavLink to="/places/new">
-                    <Button variant="primary">Add Place</Button>
+                    <Button variant="default">Add Place</Button>
                   </NavLink>
                 </li>
               )}
               {!isLoggedIn && (
                 <li>
                   <NavLink to="/auth">
-                    <Button variant="primary">Login</Button>
+                    <Button variant="default">Login</Button>
                   </NavLink>
                 </li>
               )}
 
               {isLoggedIn && (
                 <li>
-                  <Button variant="default" onClick={logout}>
+                  <Button variant="outline" onClick={logout}>
                     Logout
                   </Button>
                 </li>
