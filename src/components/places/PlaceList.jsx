@@ -9,7 +9,7 @@ function PlaceList({ places }) {
           <h2 className="text-xl font-semibold text-gray-600 mb-[30px]">
             No places found. Maybe create one?
           </h2>
-          <Button variant="primary">Share place</Button>
+          <Button variant="default">Share place</Button>
         </div>
       </div>
     );
