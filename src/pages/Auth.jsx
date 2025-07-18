@@ -10,9 +10,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { Loader2 } from "lucide-react";
+import ErrorModal from "@/components/ErrorModal";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -36,6 +39,8 @@ const signUpSchema = z.object({
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { login } = useAuth();
 
   const form = useForm({
@@ -47,15 +52,6 @@ function Auth() {
     },
   });
 
-  const redirectToLogin = (registeredEmail) => {
-    setIsSignUp(false);
-    form.reset({
-      username: "",
-      email: registeredEmail,
-      password: "",
-    });
-  };
-
   const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
     form.reset({
@@ -65,30 +61,33 @@ function Auth() {
     });
   };
 
-  const fakeAuth = async (values) => {
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+  const onSubmit = async (values) => {
+    // console.log(values);
+    const endpoint = isSignUp
+      ? "http://localhost:5000/api/users/signup"
+      : "http://localhost:5000/api/users/login";
 
-    if (isSignUp) {
-      console.log("Sign up successful:", values);
-      redirectToLogin(values.email);
-    } else {
-      if (
-        values.email === "test@example.com" &&
-        values.password === "password123"
-      ) {
-        console.log("Login successful:", values);
-        login();
-      } else {
-        console.log("Login failed:", values);
+    try {
+      setIsLoading(true);
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok) {
+        throw new Error(data.message || "Authentication failed.");
       }
+      login();
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error.message || "Something went wrong.");
+      setErrorModalOpen(true);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
-  };
-
-  const onSubmit = (values) => {
-    fakeAuth(values);
   };
 
   return (
@@ -155,7 +154,15 @@ function Auth() {
               className="w-full font-semibold py-2 rounded-xl transition"
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : isSignUp ? "Sign Up" : "Login"}
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  Please wait <Loader2 className="w-4 h-4 animate-spin" />
+                </span>
+              ) : isSignUp ? (
+                "Sign Up"
+              ) : (
+                "Login"
+              )}
             </Button>
           </form>
         </Form>
@@ -172,19 +179,12 @@ function Auth() {
             </Button>
           </p>
         </div>
-
-        {!isSignUp && (
-          <div className="mt-4 bg-gray-100 p-4 rounded-lg text-sm text-gray-700">
-            <p className="font-medium mb-1">Test credentials:</p>
-            <p>
-              Email: <code>test@example.com</code>
-            </p>
-            <p>
-              Password: <code>password123</code>
-            </p>
-          </div>
-        )}
       </div>
+      <ErrorModal
+        open={errorModalOpen}
+        message={errorMessage}
+        onClose={() => setErrorModalOpen(false)}
+      />
     </div>
   );
 }
