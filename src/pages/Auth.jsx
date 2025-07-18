@@ -13,9 +13,10 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
+
 import { Loader2 } from "lucide-react";
 import ErrorModal from "@/components/ErrorModal";
+import { useAuth } from "@/hooks/useAuth";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),

@@ -12,7 +12,7 @@ import { useState } from "react";
 import Map from "../Map";
 import { Link } from "react-router";
 import LinkButton from "../LinkButton";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 function PlaceItem({
   id,

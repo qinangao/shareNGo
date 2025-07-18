@@ -5,9 +5,10 @@ import UserPlaces from "./pages/UserPlaces";
 import NewPlace from "./components/places/NewPlace";
 import UpdatePlace from "./pages/UpdatePlace";
 import Auth from "./pages/Auth";
-import { AuthContextProvider } from "./hooks/useAuth";
+
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import { AuthContextProvider } from "./hooks/AuthContextProvider";
 
 const router = createBrowserRouter([
   {
