@@ -37,7 +37,7 @@ function UsersList({ users }) {
           id={user.id}
           image={user.image}
           name={user.name}
-          placeCount={user.numOfPlaces}
+          placeCount={user.places.length}
         />
       ))}
     </div>
