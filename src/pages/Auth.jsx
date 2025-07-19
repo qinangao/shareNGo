@@ -64,7 +64,6 @@ function Auth() {
   };
 
   const onSubmit = async (values) => {
-    // console.log(values);
     const endpoint = isSignUp
       ? "http://localhost:5000/api/users/signup"
       : "http://localhost:5000/api/users/login";
@@ -74,8 +73,9 @@ function Auth() {
 
     try {
       const data = await sendRequest(endpoint, "POST", body, headers);
+      console.log(data);
       if (data) {
-        login();
+        login(data.user.id);
       }
     } catch (error) {
       console.error("Auth error:", error);
