@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import ErrorModal from "@/components/ErrorModal";
 import { useAuth } from "@/hooks/useAuth";
+import useHttp from "@/hooks/useHttp";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -39,10 +40,10 @@ const signUpSchema = z.object({
 
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorModalOpen, setErrorModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const { login } = useAuth();
+
+  const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
+    useHttp();
 
   const form = useForm({
     resolver: zodResolver(isSignUp ? signUpSchema : loginSchema),
@@ -68,31 +69,21 @@ function Auth() {
       ? "http://localhost:5000/api/users/signup"
       : "http://localhost:5000/api/users/login";
 
-    try {
-      setIsLoading(true);
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      const data = await response.json();
-      console.log(data);
+    const headers = { "Content-Type": "application/json" };
+    const body = JSON.stringify(values);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Authentication failed.");
+    try {
+      const data = await sendRequest(endpoint, "POST", body, headers);
+      if (data) {
+        login();
       }
-      login();
     } catch (error) {
-      console.error(error);
-      setErrorMessage(error.message || "Something went wrong.");
-      setErrorModalOpen(true);
-    } finally {
-      setIsLoading(false);
+      console.error("Auth error:", error);
     }
   };
 
   return (
-    <div className="flex items-center justify-center px-4">
+    <div className="flex items-center justify-center px-4 py-20">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
         <h2 className="text-2xl font-semibold text-center mb-6">
           {isSignUp ? "Create an Account" : "Login to Your Account"}
@@ -184,7 +175,7 @@ function Auth() {
       <ErrorModal
         open={errorModalOpen}
         message={errorMessage}
-        onClose={() => setErrorModalOpen(false)}
+        onClose={clearError}
       />
     </div>
   );

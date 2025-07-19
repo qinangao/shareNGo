@@ -1,7 +1,7 @@
 import UserItem from "./UserItem";
 
 function UsersList({ users }) {
-  if (users.length === 0) {
+  if (!users || users.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-6">
