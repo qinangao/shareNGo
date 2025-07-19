@@ -76,11 +76,10 @@ function PlaceItem({
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="mb-4">{address}</DialogTitle>
-            <DialogDescription>
-              <div className="h-64 w-full relative">
-                <Map location={location} />
-              </div>
-            </DialogDescription>
+
+            <div className="h-64 w-full relative">
+              <Map location={location} />
+            </div>
           </DialogHeader>
         </DialogContent>
       </Dialog>
@@ -90,7 +89,7 @@ function PlaceItem({
           <DialogHeader>
             <DialogTitle className="mb-2">Delete place</DialogTitle>
             <DialogDescription>
-              This is your dialog description text.
+              Are you sure you want to delete this place?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-2">
