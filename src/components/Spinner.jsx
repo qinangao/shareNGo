@@ -30,7 +30,12 @@ const loaderVariants = cva("animate-spin text-primary", {
 
 export function Spinner({ size, show, children, className }) {
   return (
-    <span className={spinnerVariants({ show })}>
+    <span
+      className={cn(
+        "fixed inset-0 flex items-center justify-center z-50", // center on screen
+        spinnerVariants({ show })
+      )}
+    >
       <Loader2 className={cn(loaderVariants({ size }), className)} />
       {children}
     </span>
