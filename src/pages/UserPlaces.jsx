@@ -1,15 +1,19 @@
 import { useParams } from "react-router";
 import PlaceList from "../components/places/PlaceList";
 import useHttp from "@/hooks/useHttp";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ErrorModal from "@/components/ErrorModal";
 import { Spinner } from "@/components/Spinner";
+import { AuthContext } from "@/hooks/AuthContext";
 
 function UserPlaces() {
   const userId = useParams().userId;
   const [userPlaces, setUserPlaces] = useState();
   const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
     useHttp();
+
+  const auth = useContext(AuthContext);
+  const isCurrentUser = auth.userId === userId;
 
   const endpoint = `http://localhost:5000/api/places/user/${userId}`;
 
@@ -29,11 +33,21 @@ function UserPlaces() {
     fetchPlaces();
   }, [sendRequest, endpoint]);
 
+  function handleDeletePlace(deletedId) {
+    setUserPlaces((prev) => prev.filter((place) => place.id !== deletedId));
+  }
+
   // console.log(userPlaces);
   return (
     <>
       {isLoading && <Spinner />}
-      {!isLoading && userPlaces && <PlaceList places={userPlaces} />}
+      {!isLoading && userPlaces && (
+        <PlaceList
+          places={userPlaces}
+          onDelete={handleDeletePlace}
+          isCurrentUser={isCurrentUser}
+        />
+      )}
       <ErrorModal
         open={errorModalOpen}
         message={errorMessage}

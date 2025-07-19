@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button";
 import PlaceItem from "./PlaceItem";
 
-function PlaceList({ places }) {
+function PlaceList({ places, onDelete, isCurrentUser = false }) {
   if (!places || places.length === 0) {
     return (
       <div className="error_container">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-gray-600 mb-[30px]">
-            No places found. Maybe create one?
+            {isCurrentUser
+              ? "You haven't posted any place yet"
+              : "This user hasn't posted any place"}
           </h2>
-          <Button variant="default">Share place</Button>
+          {isCurrentUser && <Button variant="default">Share place</Button>}
         </div>
       </div>
     );
@@ -28,6 +30,7 @@ function PlaceList({ places }) {
             description={place.description}
             creatorId={place.creator}
             location={place.location}
+            onDelete={onDelete}
           />
         ))}
       </ul>

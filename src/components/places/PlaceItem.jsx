@@ -13,23 +13,36 @@ import Map from "../Map";
 import { Link } from "react-router";
 import LinkButton from "../LinkButton";
 import { useAuth } from "@/hooks/useAuth";
+import useHttp from "@/hooks/useHttp";
+
+import ErrorModal from "../ErrorModal";
+import { Loader2Icon } from "lucide-react";
 
 function PlaceItem({
   id,
   image,
   title,
   address,
-  // creatorId,
+  creatorId,
   location,
   description,
+  onDelete,
 }) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const { isLoggedIn } = useAuth();
 
-  function handleDelete() {
-    console.log("delete");
+  const { userId } = useAuth();
+  const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
+    useHttp();
+
+  async function handleDelete() {
     setIsDelete(false);
+    try {
+      await sendRequest(`http://localhost:5000/api/places/${id}`, "DELETE");
+      onDelete(id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -58,7 +71,7 @@ function PlaceItem({
             </div>
             <p className="mb-3 font-normal text-gray-700">{description}</p>
 
-            {isLoggedIn && (
+            {userId === creatorId && (
               <div className="mt-4 flex flex-wrap gap-2">
                 <Link to={`/places/${id}`}>
                   <Button variant="default">Edit</Button>
@@ -96,12 +109,23 @@ function PlaceItem({
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button variant="default" onClick={handleDelete}>
-              Delete
+            <Button
+              variant="default"
+              onClick={handleDelete}
+              disabled={isLoading}
+            >
+              {isLoading ? "Deleting" : "Delete"}
+              {isLoading && <Loader2Icon className="w-4 h-4 animate-spin" />}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <ErrorModal
+        open={errorModalOpen}
+        message={errorMessage}
+        onClose={clearError}
+      />
     </>
   );
 }
