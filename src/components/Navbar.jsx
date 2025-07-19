@@ -7,6 +7,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn, logout } = useAuth();
 
+  const { userId } = useAuth();
+
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -66,7 +68,7 @@ const Navbar = () => {
             </li>
             {isLoggedIn && (
               <li>
-                <NavLink to="/u1/places" className={getNavLinkClass}>
+                <NavLink to={`/${userId}/places`} className={getNavLinkClass}>
                   My Places
                 </NavLink>
               </li>
