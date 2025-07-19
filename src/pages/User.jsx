@@ -23,6 +23,7 @@ function User() {
 
   return (
     <>
+      {isLoading && <Spinner size="large" />}
       <div className="py-12 sm:py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl py-2 sm:text-5xl font-bold bg-gradient-to-r from-brand-300 to-purple-300 bg-clip-text text-transparent mb-4">
@@ -32,7 +33,7 @@ function User() {
             Explore incredible destinations shared by our community of travelers
           </p>
         </div>
-        {isLoading && <Spinner size="large" />}
+
         {!isLoading && !errorMessage && users && <UsersList users={users} />}
       </div>
 
