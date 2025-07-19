@@ -2,36 +2,25 @@ import { useEffect, useState } from "react";
 import UsersList from "../components/user/UsersList";
 import ErrorModal from "@/components/ErrorModal";
 import { Spinner } from "@/components/Spinner";
+import useHttp from "@/hooks/useHttp";
 
 function User() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [users, setUsers] = useState(null);
+
+  const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
+    useHttp();
 
   useEffect(() => {
     async function fetchUsers() {
-      setIsLoading(true);
-      try {
-        const response = await fetch("http://localhost:5000/api/users");
-        const usersData = await response.json();
-
-        if (!response.ok) {
-          throw new Error(usersData.message || "Failed to fetch users");
-        }
-
-        setUsers(usersData.users);
-      } catch (error) {
-        setErrorMessage(error.message || "Something went wrong");
-        setErrorModalOpen(true);
-      } finally {
-        setIsLoading(false);
+      const data = await sendRequest("http://localhost:5000/api/users");
+      if (data && data.users) {
+        setUsers(data.users);
       }
     }
 
     fetchUsers();
-  }, []);
-  console.log(users);
+  }, [sendRequest]);
+
   return (
     <>
       <div className="py-12 sm:py-16">
@@ -50,7 +39,7 @@ function User() {
       <ErrorModal
         open={errorModalOpen}
         message={errorMessage}
-        onClose={() => setErrorModalOpen(false)}
+        onClose={clearError}
       />
     </>
   );
