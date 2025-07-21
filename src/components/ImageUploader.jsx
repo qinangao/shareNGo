@@ -105,7 +105,7 @@ function ImageUploader({ onFileSelect, value }) {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onClick={handleClick}
-      className={`w-full max-w-md p-6 rounded-2xl transition-all duration-200 cursor-pointer border-2 border-dashed ${
+      className={`w-full p-6 rounded-2xl transition-all duration-200 cursor-pointer border-2 border-dashed ${
         isDragAccept
           ? "border-blue-500 bg-blue-50"
           : isDragActive
@@ -129,7 +129,7 @@ function ImageUploader({ onFileSelect, value }) {
         ) : (
           <div className="flex items-center flex-col gap-1.5">
             <div className="text-sm font-medium text-gray-600">
-              Upload Avatar
+              Upload Image
             </div>
             <p className="text-xs text-gray-400 font-medium">
               Drag & drop or click to browse files
@@ -147,7 +147,7 @@ function ImageUploader({ onFileSelect, value }) {
             <img
               src={imagePreview}
               alt="Preview"
-              className="rounded-lg w-40 h-40 object-cover border border-gray-300 shadow"
+              className="rounded-lg object-cover border border-gray-300 shadow"
             />
             <button
               onClick={handleRemove}
