@@ -18,6 +18,7 @@ import { Loader2 } from "lucide-react";
 import ErrorModal from "@/components/ErrorModal";
 import { useAuth } from "@/hooks/useAuth";
 import useHttp from "@/hooks/useHttp";
+import ImageUploader from "@/components/ImageUploader";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -36,6 +37,7 @@ const signUpSchema = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters." })
     .max(20, { message: "Password must be at most 20 characters." }),
+  image: z.instanceof(File).optional(),
 });
 
 function Auth() {
@@ -51,6 +53,7 @@ function Auth() {
       username: "",
       email: "",
       password: "",
+      image: null,
     },
   });
 
@@ -68,17 +71,37 @@ function Auth() {
       ? "http://localhost:5000/api/users/signup"
       : "http://localhost:5000/api/users/login";
 
-    const headers = { "Content-Type": "application/json" };
-    const body = JSON.stringify(values);
+    if (isSignUp && values.image) {
+      // Use FormData for file upload
+      const formData = new FormData();
+      formData.append("username", values.username);
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      formData.append("image", values.image);
 
-    try {
-      const data = await sendRequest(endpoint, "POST", body, headers);
-      console.log(data);
-      if (data) {
-        login(data.user.id);
+      console.log(values);
+      try {
+        const data = await sendRequest(endpoint, "POST", formData); // No Content-Type header for FormData
+        console.log(data);
+        if (data) {
+          login(data.user.id);
+        }
+      } catch (error) {
+        console.error("Auth error:", error);
       }
-    } catch (error) {
-      console.error("Auth error:", error);
+    } else {
+      // Regular JSON for login or signup without avatar
+      const headers = { "Content-Type": "application/json" };
+      const body = JSON.stringify(values);
+      try {
+        const data = await sendRequest(endpoint, "POST", body, headers);
+        console.log(data);
+        if (data) {
+          login(data.user.id);
+        }
+      } catch (error) {
+        console.error("Auth error:", error);
+      }
     }
   };
 
@@ -141,6 +164,26 @@ function Auth() {
                 </FormItem>
               )}
             />
+            {isSignUp && (
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-700 dark:text-gray-300">
+                      Profile Picture
+                    </FormLabel>
+                    <FormControl>
+                      <ImageUploader
+                        onFileSelect={(file) => field.onChange(file)}
+                        value={field.value}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <Button
               type="submit"
               className="w-full font-semibold py-2 rounded-xl transition"
