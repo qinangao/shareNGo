@@ -17,6 +17,7 @@ import useHttp from "@/hooks/useHttp";
 import { useAuth } from "@/hooks/useAuth";
 import ErrorModal from "../ErrorModal";
 import { Spinner } from "../Spinner";
+import ImageUploader from "../ImageUploader";
 
 const formSchema = z.object({
   title: z
@@ -31,6 +32,17 @@ const formSchema = z.object({
     .string()
     .min(5, { message: "Description must be at least 5 characters." })
     .max(200, { message: "Description must be at most 200 characters." }),
+  image: z
+    .instanceof(File)
+    .refine((file) => file.size < 5 * 1024 * 1024, {
+      message: "Image must be less than 5MB",
+    })
+    .refine(
+      (file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type),
+      {
+        message: "Only JPEG and PNG formats are allowed",
+      }
+    ),
 });
 
 function NewPlace() {
@@ -47,15 +59,21 @@ function NewPlace() {
       title: "",
       address: "",
       description: "",
+      image: null,
     },
   });
   const onSubmit = async (values) => {
     const endpoint = "http://localhost:5000/api/places";
-    const headers = { "Content-Type": "application/json" };
-    const body = JSON.stringify({ ...values, creator: userId });
+
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("address", values.address);
+    formData.append("description", values.description);
+    formData.append("image", values.image);
+    formData.append("creator", userId);
 
     try {
-      const data = await sendRequest(endpoint, "POST", body, headers);
+      const data = await sendRequest(endpoint, "POST", formData);
       console.log(data);
       if (data) {
         navigate("/user"); // ✅ Navigate after successful submission
@@ -194,6 +212,37 @@ function NewPlace() {
                             {...field}
                             className="min-h-[140px] border-2 border-gray-200 rounded-xl px-4 py-3 text-base placeholder:text-gray-400 focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all duration-200 bg-white/60 resize-none"
                             placeholder="What makes this place special? Share your memories, tips, or what travelers should know..."
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-100 text-sm mt-2 flex items-center gap-1" />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="image"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-lg font-semibold text-dark-100 flex items-center gap-2">
+                          <svg
+                            className="w-5 h-5 text-brand-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 16l4-4a3 3 0 014 0l4 4M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2zM8 10h.01"
+                            />
+                          </svg>
+                          Upload Image
+                        </FormLabel>
+                        <FormControl>
+                          <ImageUploader
+                            onFileSelect={(file) => field.onChange(file)}
+                            value={field.value}
                           />
                         </FormControl>
                         <FormMessage className="text-red-100 text-sm mt-2 flex items-center gap-1" />
