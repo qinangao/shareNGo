@@ -53,7 +53,7 @@ function PlaceItem({
           <div className="sm:w-1/2 w-full h-64 sm:h-auto">
             <img
               className="w-full h-full object-cover"
-              src={image}
+              src={`http://localhost:5000/${image}`}
               alt={title}
             />
           </div>
