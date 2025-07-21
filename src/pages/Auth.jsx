@@ -81,7 +81,7 @@ function Auth() {
 
       console.log(values);
       try {
-        const data = await sendRequest(endpoint, "POST", formData); // No Content-Type header for FormData
+        const data = await sendRequest(endpoint, "POST", formData);
         console.log(data);
         if (data) {
           login(data.user.id);
