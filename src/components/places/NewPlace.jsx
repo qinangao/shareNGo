@@ -49,7 +49,7 @@ function NewPlace() {
   const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
     useHttp();
 
-  const { userId, token } = useAuth();
+  const { token } = useAuth();
 
   const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ function NewPlace() {
     formData.append("address", values.address);
     formData.append("description", values.description);
     formData.append("image", values.image);
-    formData.append("creator", userId);
+
     const header = { Authorization: "Bearer " + token };
 
     try {
