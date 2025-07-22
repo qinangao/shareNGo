@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import PlaceItem from "./PlaceItem";
+import { Link } from "react-router";
 
 function PlaceList({ places, onDelete, isCurrentUser = false }) {
   if (!places || places.length === 0) {
@@ -11,7 +12,11 @@ function PlaceList({ places, onDelete, isCurrentUser = false }) {
               ? "You haven't posted any place yet"
               : "This user hasn't posted any place"}
           </h2>
-          {isCurrentUser && <Button variant="default">Share place</Button>}
+          {isCurrentUser && (
+            <Link to="/places/new">
+              <Button variant="default">Share place</Button>
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -19,7 +24,7 @@ function PlaceList({ places, onDelete, isCurrentUser = false }) {
 
   return (
     <div className="container">
-      <ul className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
         {places.map((place) => (
           <PlaceItem
             key={place.id}

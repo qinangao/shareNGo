@@ -31,6 +31,7 @@ function PlaceItem({
 }) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const { userId, token } = useAuth();
   const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
@@ -48,12 +49,16 @@ function PlaceItem({
     }
   }
 
+  // How many chars before showing "Read more" toggle
+  const DESCRIPTION_TRUNCATE_LIMIT = 45;
+  const isDescriptionLong = description.length > DESCRIPTION_TRUNCATE_LIMIT;
+
   return (
     <>
-      <li className="h-full">
-        <div className="flex flex-col sm:flex-row bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden h-full">
+      <li>
+        <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
           {/* Image Section */}
-          <div className="sm:w-1/2 w-full h-64 sm:h-auto">
+          <div className="w-full h-64">
             <img
               className="w-full h-full object-cover"
               src={`${ASSET_URL}/${image}`}
@@ -62,20 +67,47 @@ function PlaceItem({
           </div>
 
           {/* Content Section */}
-          <div className="p-5 flex flex-col space-y-4 w-full">
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900">
-              {title}
-            </h5>
+          <div className="p-5 flex flex-col">
+            {/* Title and Address */}
             <div>
-              <p className="text-sm text-gray-600 mb-1">{address}</p>
-              <LinkButton onClick={() => setIsMapOpen(true)}>
-                View on map
-              </LinkButton>
+              <h5 className="text-2xl font-bold tracking-tight text-gray-900 mb-4">
+                {title}
+              </h5>
+              <div className="mb-4">
+                <p className="text-sm text-gray-600 mb-1">{address}</p>
+                <LinkButton onClick={() => setIsMapOpen(true)}>
+                  View on map
+                </LinkButton>
+              </div>
             </div>
-            <p className="mb-3 font-normal text-gray-700">{description}</p>
 
+            {/* Description Section */}
+            <div className="mb-4">
+              <div
+                className="font-normal text-gray-700"
+                style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+              >
+                <div>
+                  {showFullDescription || !isDescriptionLong
+                    ? description
+                    : description.slice(0, DESCRIPTION_TRUNCATE_LIMIT) + "..."}
+                </div>
+
+                {isDescriptionLong && (
+                  <button
+                    className="text-blue-600 underline text-sm mt-1"
+                    onClick={() => setShowFullDescription(!showFullDescription)}
+                    type="button"
+                  >
+                    {showFullDescription ? "Show less" : "Read more"}
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Buttons Section */}
             {userId === creatorId && (
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Link to={`/places/${id}`}>
                   <Button variant="default">Edit</Button>
                 </Link>
