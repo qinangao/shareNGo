@@ -41,7 +41,7 @@ function UserPlaces() {
   // console.log(userPlaces);
   return (
     <>
-      {isLoading && <Spinner />}
+      {isLoading && <Spinner size="large" />}
       {!isLoading && userPlaces && (
         <PlaceList
           places={userPlaces}
