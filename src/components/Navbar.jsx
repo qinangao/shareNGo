@@ -5,21 +5,19 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn, logout } = useAuth();
-
-  const { userId } = useAuth();
+  const { isLoggedIn, logout, userId } = useAuth();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   const getNavLinkClass = ({ isActive }) =>
-    `py-2 px-4 text-dark-100 md:px-0 ${
+    `py-2 px-4 text-dark-100 ${
       isActive ? "border-b-2 border-dark-100" : "hover:text-brand-300"
     }`;
 
   return (
-    <nav className="bg-white border-gray-200 shadow-sm">
+    <nav className="bg-white border-gray-200 shadow-sm relative z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <NavLink
           to="/"
@@ -35,13 +33,12 @@ const Navbar = () => {
           onClick={toggleNavbar}
           type="button"
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          aria-controls="navbar-default"
+          aria-controls="mobile-menu"
           aria-expanded={isOpen}
         >
           <span className="sr-only">Open main menu</span>
           <svg
             className="w-5 h-5"
-            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 17 14"
@@ -56,50 +53,80 @@ const Navbar = () => {
           </svg>
         </button>
 
-        <div
-          className={`${isOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
-          id="navbar-default"
-        >
-          <ul className="flex flex-col md:flex-row items-center justify-center gap-8 p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 md:border-0 rounded-lg bg-gray-50 md:bg-transparent">
-            <li>
-              <NavLink to="/user" className={getNavLinkClass}>
-                Community
+        {/* Desktop menu */}
+        <div className="hidden md:flex md:items-center gap-8">
+          <NavLink to="/user" className={getNavLinkClass}>
+            Community
+          </NavLink>
+          {isLoggedIn && (
+            <NavLink to={`/${userId}/places`} className={getNavLinkClass}>
+              My Places
+            </NavLink>
+          )}
+          {isLoggedIn ? (
+            <>
+              <NavLink to="/places/new">
+                <Button variant="default">Add Place</Button>
               </NavLink>
-            </li>
-            {isLoggedIn && (
-              <li>
-                <NavLink to={`/${userId}/places`} className={getNavLinkClass}>
-                  My Places
-                </NavLink>
-              </li>
-            )}
-            <div className="flex justify-center items-center gap-4 md:gap-8">
-              {isLoggedIn && (
-                <li>
-                  <NavLink to="/places/new">
-                    <Button variant="default">Add Place</Button>
-                  </NavLink>
-                </li>
-              )}
-              {!isLoggedIn && (
-                <li>
-                  <NavLink to="/auth">
-                    <Button variant="default">Login</Button>
-                  </NavLink>
-                </li>
-              )}
-
-              {isLoggedIn && (
-                <li>
-                  <Button variant="outline" onClick={logout}>
-                    Logout
-                  </Button>
-                </li>
-              )}
-            </div>
-          </ul>
+              <Button variant="outline" onClick={logout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <NavLink to="/auth">
+              <Button variant="default">Login</Button>
+            </NavLink>
+          )}
         </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {isOpen && (
+        <div
+          id="mobile-menu"
+          className="absolute text-center top-16 left-1/2 -translate-x-1/2 w-[90%] bg-white shadow-lg rounded-b-md p-4 flex flex-col gap-4 md:hidden transition-all duration-300"
+        >
+          <NavLink to="/user" onClick={() => setIsOpen(false)}>
+            <span className="block text-dark-100 hover:text-brand-300 py-2">
+              Community
+            </span>
+          </NavLink>
+
+          {isLoggedIn && (
+            <NavLink to={`/${userId}/places`} onClick={() => setIsOpen(false)}>
+              <span className="block text-dark-100 hover:text-brand-300 py-2">
+                My Places
+              </span>
+            </NavLink>
+          )}
+
+          {isLoggedIn ? (
+            <>
+              <NavLink to="/places/new" onClick={() => setIsOpen(false)}>
+                <Button variant="default" className="w-full">
+                  Add Place
+                </Button>
+              </NavLink>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="w-full"
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <NavLink to="/auth" onClick={() => setIsOpen(false)}>
+              <Button variant="default" className="w-full">
+                Login
+              </Button>
+            </NavLink>
+          )}
+        </div>
+      )}
     </nav>
   );
 };
