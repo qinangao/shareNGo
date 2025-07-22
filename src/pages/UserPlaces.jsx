@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import ErrorModal from "@/components/ErrorModal";
 import { Spinner } from "@/components/Spinner";
 import { AuthContext } from "@/hooks/AuthContext";
+import { BACKEND_URL } from "@/utils/constants";
 
 function UserPlaces() {
   const userId = useParams().userId;
@@ -15,7 +16,7 @@ function UserPlaces() {
   const auth = useContext(AuthContext);
   const isCurrentUser = auth.userId === userId;
 
-  const endpoint = `http://localhost:5000/api/places/user/${userId}`;
+  const endpoint = `${BACKEND_URL}/places/user/${userId}`;
 
   useEffect(() => {
     async function fetchPlaces() {

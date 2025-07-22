@@ -3,6 +3,7 @@ import UsersList from "../components/user/UsersList";
 import ErrorModal from "@/components/ErrorModal";
 import { Spinner } from "@/components/Spinner";
 import useHttp from "@/hooks/useHttp";
+import { BACKEND_URL } from "@/utils/constants";
 
 function User() {
   const [users, setUsers] = useState(null);
@@ -12,7 +13,7 @@ function User() {
 
   useEffect(() => {
     async function fetchUsers() {
-      const data = await sendRequest("http://localhost:5000/api/users");
+      const data = await sendRequest(`${BACKEND_URL}/users`);
       if (data && data.users) {
         setUsers(data.users);
       }

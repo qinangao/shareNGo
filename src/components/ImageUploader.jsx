@@ -59,7 +59,7 @@ function ImageUploader({ onFileSelect, value }) {
 
     if (imageFiles.length > 0) {
       const file = imageFiles[0];
-      console.log("File uploaded via drag & drop:", file);
+
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
       setUploadedFiles([file]);

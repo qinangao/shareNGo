@@ -17,6 +17,7 @@ import useHttp from "@/hooks/useHttp";
 
 import ErrorModal from "../ErrorModal";
 import { Loader2Icon } from "lucide-react";
+import { ASSET_URL, BACKEND_URL } from "@/utils/constants";
 
 function PlaceItem({
   id,
@@ -40,12 +41,7 @@ function PlaceItem({
 
     const header = { Authorization: "Bearer " + token };
     try {
-      await sendRequest(
-        `http://localhost:5000/api/places/${id}`,
-        "DELETE",
-        null,
-        header
-      );
+      await sendRequest(`${BACKEND_URL}/places/${id}`, "DELETE", null, header);
       onDelete(id);
     } catch (error) {
       console.log(error);
@@ -60,7 +56,7 @@ function PlaceItem({
           <div className="sm:w-1/2 w-full h-64 sm:h-auto">
             <img
               className="w-full h-full object-cover"
-              src={`http://localhost:5000/${image}`}
+              src={`${ASSET_URL}/${image}`}
               alt={title}
             />
           </div>

@@ -18,6 +18,7 @@ import useHttp from "@/hooks/useHttp";
 import { Spinner } from "@/components/Spinner";
 import ErrorModal from "@/components/ErrorModal";
 import { useAuth } from "@/hooks/useAuth";
+import { ASSET_URL, BACKEND_URL } from "@/utils/constants";
 
 const formSchema = z.object({
   title: z
@@ -46,7 +47,7 @@ function UpdatePlace() {
     },
   });
 
-  const endpoint = `http://localhost:5000/api/places/${placeId}`;
+  const endpoint = `${BACKEND_URL}/places/${placeId}`;
 
   useEffect(() => {
     async function fetchPlace() {
@@ -108,7 +109,7 @@ function UpdatePlace() {
             </h2>
             <img
               className="w-full h-full object-cover"
-              src={`http://localhost:5000/${currentPlace.image}`}
+              src={`${ASSET_URL}/${currentPlace.image}`}
               alt={currentPlace.title}
             />
             <Form {...form}>

@@ -18,6 +18,7 @@ import { useAuth } from "@/hooks/useAuth";
 import ErrorModal from "../ErrorModal";
 import { Spinner } from "../Spinner";
 import ImageUploader from "../ImageUploader";
+import { BACKEND_URL } from "@/utils/constants";
 
 const formSchema = z.object({
   title: z
@@ -63,7 +64,7 @@ function NewPlace() {
     },
   });
   const onSubmit = async (values) => {
-    const endpoint = "http://localhost:5000/api/places";
+    const endpoint = `${BACKEND_URL}/places`;
 
     const formData = new FormData();
     formData.append("title", values.title);
@@ -75,7 +76,7 @@ function NewPlace() {
 
     try {
       const data = await sendRequest(endpoint, "POST", formData, header);
-      console.log(data);
+
       if (data) {
         navigate("/user"); // ✅ Navigate after successful submission
       }

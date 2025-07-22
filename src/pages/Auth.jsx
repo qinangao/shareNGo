@@ -19,6 +19,7 @@ import ErrorModal from "@/components/ErrorModal";
 import { useAuth } from "@/hooks/useAuth";
 import useHttp from "@/hooks/useHttp";
 import ImageUploader from "@/components/ImageUploader";
+import { BACKEND_URL } from "@/utils/constants";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -68,8 +69,8 @@ function Auth() {
 
   const onSubmit = async (values) => {
     const endpoint = isSignUp
-      ? "http://localhost:5000/api/users/signup"
-      : "http://localhost:5000/api/users/login";
+      ? `${BACKEND_URL}/users/signup`
+      : `${BACKEND_URL}/users/login`;
 
     if (isSignUp && values.image) {
       // Use FormData for file upload
@@ -81,7 +82,7 @@ function Auth() {
 
       try {
         const data = await sendRequest(endpoint, "POST", formData);
-        console.log(data);
+
         if (data) {
           login(data.userId, data.token);
         }
@@ -94,7 +95,7 @@ function Auth() {
       const body = JSON.stringify(values);
       try {
         const data = await sendRequest(endpoint, "POST", body, headers);
-        console.log(data);
+
         if (data) {
           login(data.userId, data.token);
         }
