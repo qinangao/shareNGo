@@ -49,7 +49,7 @@ function NewPlace() {
   const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
     useHttp();
 
-  const { userId } = useAuth();
+  const { userId, token } = useAuth();
 
   const navigate = useNavigate();
 
@@ -71,9 +71,10 @@ function NewPlace() {
     formData.append("description", values.description);
     formData.append("image", values.image);
     formData.append("creator", userId);
+    const header = { Authorization: "Bearer " + token };
 
     try {
-      const data = await sendRequest(endpoint, "POST", formData);
+      const data = await sendRequest(endpoint, "POST", formData, header);
       console.log(data);
       if (data) {
         navigate("/user"); // ✅ Navigate after successful submission

@@ -79,12 +79,11 @@ function Auth() {
       formData.append("password", values.password);
       formData.append("image", values.image);
 
-      console.log(values);
       try {
         const data = await sendRequest(endpoint, "POST", formData);
         console.log(data);
         if (data) {
-          login(data.user.id);
+          login(data.userId, data.token);
         }
       } catch (error) {
         console.error("Auth error:", error);
@@ -97,7 +96,7 @@ function Auth() {
         const data = await sendRequest(endpoint, "POST", body, headers);
         console.log(data);
         if (data) {
-          login(data.user.id);
+          login(data.userId, data.token);
         }
       } catch (error) {
         console.error("Auth error:", error);

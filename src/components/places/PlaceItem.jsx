@@ -31,14 +31,21 @@ function PlaceItem({
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
-  const { userId } = useAuth();
+  const { userId, token } = useAuth();
   const { isLoading, errorMessage, errorModalOpen, sendRequest, clearError } =
     useHttp();
 
   async function handleDelete() {
     setIsDelete(false);
+
+    const header = { Authorization: "Bearer " + token };
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}`, "DELETE");
+      await sendRequest(
+        `http://localhost:5000/api/places/${id}`,
+        "DELETE",
+        null,
+        header
+      );
       onDelete(id);
     } catch (error) {
       console.log(error);

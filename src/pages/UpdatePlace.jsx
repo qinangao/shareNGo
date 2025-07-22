@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import useHttp from "@/hooks/useHttp";
 import { Spinner } from "@/components/Spinner";
 import ErrorModal from "@/components/ErrorModal";
+import { useAuth } from "@/hooks/useAuth";
 
 const formSchema = z.object({
   title: z
@@ -33,6 +34,7 @@ function UpdatePlace() {
   const [currentPlace, setCurrentPlace] = useState(null);
   const { errorMessage, errorModalOpen, sendRequest, clearError, isLoading } =
     useHttp();
+  const { token } = useAuth();
   const { placeId } = useParams();
   const navigate = useNavigate();
 
@@ -67,7 +69,10 @@ function UpdatePlace() {
   }, [currentPlace, form]);
 
   const onSubmit = async (values) => {
-    const headers = { "Content-Type": "application/json" };
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    };
     const body = JSON.stringify(values);
     try {
       const data = await sendRequest(endpoint, "PATCH", body, headers);
@@ -103,7 +108,7 @@ function UpdatePlace() {
             </h2>
             <img
               className="w-full h-full object-cover"
-              src={currentPlace.image}
+              src={`http://localhost:5000/${currentPlace.image}`}
               alt={currentPlace.title}
             />
             <Form {...form}>
