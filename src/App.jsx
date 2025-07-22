@@ -1,14 +1,16 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import Applayout from "./Applayout";
 import User from "./pages/User";
-import UserPlaces from "./pages/UserPlaces";
-import NewPlace from "./components/places/NewPlace";
-import UpdatePlace from "./pages/UpdatePlace";
-import Auth from "./pages/Auth";
-
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import { AuthContextProvider } from "./hooks/AuthContextProvider";
+import { lazy, Suspense } from "react";
+import { Spinner } from "./components/Spinner";
+
+const Auth = lazy(() => import("./pages/Auth"));
+const UserPlaces = lazy(() => import("./pages/UserPlaces"));
+const NewPlace = lazy(() => import("./components/places/NewPlace"));
+const UpdatePlace = lazy(() => import("./pages/UpdatePlace"));
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/:userId/places",
+
         element: <UserPlaces />,
       },
       {
@@ -62,7 +65,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <Suspense fallback={<Spinner size="large" />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </AuthContextProvider>
   );
 }
