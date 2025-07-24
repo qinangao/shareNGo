@@ -8,29 +8,24 @@ const config = {
     extend: {
       colors: {
         brand: {
-          50: "#E3F7FE",
-          100: "#ade7fe",
-          200: "#94DFFE",
-          300: "#48C8FD",
-          400: "#679CB1",
+          50: "#f6faf9",
+          100: "#B4CDE0",
+          200: "#8FBBD8",
+          300: "#929F55",
+          400: "#998E6F",
         },
         red: {
           100: "#dc3545",
           200: "#bd2130",
         },
-        purple: {
-          50: "#f1e9fb",
-          100: "#e3d4f8",
-          200: "#c7a8f0",
-          300: "#9088fe",
-          400: "#5c4ffd",
-        },
-        light: {
-          100: "#FEF5E8",
+        bg: {
+          100: "#F2F2F2",
+          200: "#E4D5BB",
         },
         dark: {
-          50: "#545b6e",
-          100: "#333743",
+          50: "#5E717F",
+          100: "#1B2E1B",
+          200: "#000000",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
