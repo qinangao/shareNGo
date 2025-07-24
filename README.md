@@ -1,25 +1,26 @@
 # shareNGo
 
-A full-stack web application that allows users to share their travel memories and locations with others. Built with the MERN stack and featuring a modern, responsive UI powered by Flowbite components.
+A full-stack web application that allows users to share their travel memories and locations with others. Built with React and featuring a modern, responsive UI powered by shadcn/ui components and interactive mapping capabilities.
 
 ## Features
 
 - **Memory Sharing**: Create and share your travel experiences with photos, descriptions, and locations
-- **Interactive Maps**: View and explore travel locations on an interactive map
-- **User Authentication**: Secure user registration and login system
+- **Interactive Maps**: View and explore travel locations using Leaflet maps
+- **User Authentication**: Secure user registration and login system with form validation
 - **Memory Feed**: Browse and discover travel memories from other users
-- **Location Tagging**: Tag specific locations for your travel memories
-- **Responsive Design**: Beautiful, mobile-friendly interface using Flowbite components
-- **User Profiles**: Personalized profiles showcasing individual travel journeys
+- **File Upload**: Drag-and-drop image uploading
+- **Responsive Design**: Beautiful, mobile-friendly interface using shadcn/ui components
 
 ## Tech Stack
 
 ### Frontend
 
-- **React.js** - User interface library
-- **Flowbite** - Modern component library for React
-- **Tailwind CSS** - Utility-first CSS framework (via Flowbite)
-- **React Router** - Client-side routing
+- **React 19** - Modern user interface library
+- **shadcn/ui** - High-quality component library built on Radix UI
+- **Tailwind CSS** - Utility-first CSS framework
+- **React Router v7** - Client-side routing
+- **React Leaflet** - Interactive maps integration
+- **React Hook Form** - Performant forms with easy validation
 
 ### Backend
 
@@ -32,13 +33,14 @@ A full-stack web application that allows users to share their travel memories an
 - **JWT** - JSON Web Tokens for authentication
 - **Bcrypt** - Password hashing
 - **Multer** - File upload handling
-- **Cloudinary** - Image storage and optimization (optional)
+- **Cloudinary** - Image storage and optimisation
+- **Render** - Web server hosting
 
 ## Prerequisites
 
-Before running this application, make sure you have the following installed:
+Before running this application, ensure you have the following installed:
 
-- Node.js (v14 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 - MongoDB (local installation or MongoDB Atlas account)
 
@@ -47,8 +49,8 @@ Before running this application, make sure you have the following installed:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/travel-memories-app.git
-   cd travel-memories-app
+   git clone https://github.com/yourusername/shareNGo.git
+   cd shareNGo
    ```
 
 2. **Install backend dependencies**
@@ -65,70 +67,126 @@ Before running this application, make sure you have the following installed:
    npm install
    ```
 
-4. **Set up environment variables**
+4. **Environment Configuration**
 
    Create a `.env` file in the backend directory:
 
    ```env
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/travel-memories
-   JWT_SECRET=your-jwt-secret-key
-   CLOUDINARY_CLOUD_NAME=your-cloudinary-name
-   CLOUDINARY_API_KEY=your-cloudinary-key
-   CLOUDINARY_API_SECRET=your-cloudinary-secret
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
    ```
 
    Create a `.env` file in the frontend directory:
 
    ```env
-   REACT_APP_API_URL=http://localhost:5000/api
-   REACT_APP_MAPBOX_TOKEN=your-mapbox-token
+   VITE_API_URL=http://localhost:5000/api
    ```
 
-## Usage
+## Development
 
 1. **Start the backend server**
 
    ```bash
    cd backend
-   npm start
+   npm run dev
    ```
 
 2. **Start the frontend development server**
 
    ```bash
    cd frontend
-   npm start
+   npm run dev
    ```
 
-3. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
+3. **Open your browser** and navigate to `http://localhost:5173`
 
-## API Endpoints
+## Available Scripts
 
-### Authentication
+### Frontend
 
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/profile` - Get user profile
+- `npm run dev` - Start the development server
+- `npm run build` - Build the project for production
+- `npm run preview` - Preview the production build
+- `npm run lint` - Run ESLint for code quality
 
-### Memories
+### Backend
 
-- `GET /api/memories` - Get all memories
-- `POST /api/memories` - Create a new memory
-- `GET /api/memories/:id` - Get specific memory
-- `PUT /api/memories/:id` - Update memory
-- `DELETE /api/memories/:id` - Delete memory
+- `npm run dev` - Start the development server with nodemon
+- `npm start` - Start the production server
 
-### Users
+## Project Structure
 
-- `GET /api/users/:id` - Get user profile
-- `PUT /api/users/:id` - Update user profile
+```
+shareNGo/
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Page components
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── lib/            # Utility functions
+│   │   └── styles/         # Global styles
+│   ├── public/             # Static assets
+│   └── package.json
+├── backend/
+│   ├── models/             # Database models
+│   ├── routes/             # API routes
+│   ├── middleware/         # Express middleware
+│   ├── config/             # Configuration files
+│   └── package.json
+└── README.md
+```
 
-## License
+## Deployment
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Frontend (Vercel/Netlify)
+
+1. Build the project: `npm run build`
+2. Deploy the `dist` folder to your hosting platform
+
+### Backend (Render/Railway)
+
+1. Push your code to GitHub
+2. Connect your repository to your hosting platform
+3. Set environment variables
+4. Deploy
+
+## Key Dependencies
+
+### UI & Styling
+
+- **shadcn/ui** - Modern component library with Radix UI primitives
+- **Tailwind CSS** - Utility-first styling with animations
+- **Lucide React** - Beautiful, customisable icons
+
+### Forms & Validation
+
+- **React Hook Form** - Efficient form handling
+- **Zod** - Runtime type checking and validation
+- **Hookform Resolvers** - Validation library integration
+
+### Maps & Location
+
+- **Leaflet** - Open-source interactive maps
+- **React Leaflet** - React components for Leaflet
+
+### File Handling
+
+- **shadcn-dropzone** - Drag-and-drop file upload component
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Licence
+
+This project is licensed under the MIT Licence - see the [LICENCE](LICENCE) file for details.
 
 ## Support
 
@@ -138,13 +196,15 @@ If you encounter any issues or have questions, please:
 2. Create a new issue with detailed information
 3. Contact the maintainers
 
-## Acknowledgments
+## Acknowledgements
 
-- [Flowbite](https://flowbite.com/) for the beautiful UI components
+- [shadcn/ui](https://ui.shadcn.com/) for the exceptional component library
+- [Radix UI](https://www.radix-ui.com/) for accessible UI primitives
+- [Leaflet](https://leafletjs.com/) for the mapping solution
 - [MongoDB](https://www.mongodb.com/) for the database solution
 - [React](https://reactjs.org/) for the frontend framework
 - [Express.js](https://expressjs.com/) for the backend framework
 
 ---
 
-**Happy Traveling! 🌍✈️**
+**Happy Travelling! 🌍✈️**
