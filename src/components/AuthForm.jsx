@@ -71,15 +71,17 @@ function AuthForm() {
       ? `${BACKEND_URL}/users/signup`
       : `${BACKEND_URL}/users/login`;
 
-    console.log("Signup endpoint:", `${BACKEND_URL}/users/signup`);
-
-    if (isSignUp && values.image) {
-      // Use FormData for file upload
+    if (isSignUp) {
+      // Always use FormData for signup (with or without image)
       const formData = new FormData();
       formData.append("username", values.username);
       formData.append("email", values.email);
       formData.append("password", values.password);
-      formData.append("image", values.image);
+
+      // Only append image if it exists
+      if (values.image) {
+        formData.append("image", values.image);
+      }
 
       try {
         const data = await sendRequest(endpoint, "POST", formData);
@@ -91,9 +93,13 @@ function AuthForm() {
         console.error("Auth error:", error);
       }
     } else {
-      // Regular JSON for login or signup without avatar
+      // Regular JSON for login only
       const headers = { "Content-Type": "application/json" };
-      const body = JSON.stringify(values);
+      const body = JSON.stringify({
+        email: values.email,
+        password: values.password,
+      });
+
       try {
         const data = await sendRequest(endpoint, "POST", body, headers);
 
@@ -122,7 +128,11 @@ function AuthForm() {
                       Username
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your username" {...field} />
+                      <Input
+                        placeholder="Enter your username"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -138,7 +148,11 @@ function AuthForm() {
                     Email
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} />
+                    <Input
+                      placeholder="you@example.com"
+                      {...field}
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,6 +171,7 @@ function AuthForm() {
                       type="password"
                       placeholder="Your password"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
                   <FormMessage />

@@ -147,7 +147,7 @@ function ImageUploader({ onFileSelect, value }) {
             <img
               src={imagePreview}
               alt="Preview"
-              className="rounded-lg object-cover border border-gray-300 shadow"
+              className="rounded-lg w-[300px] object-cover border border-gray-300 shadow"
             />
             <button
               onClick={handleRemove}

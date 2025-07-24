@@ -23,18 +23,22 @@ function User() {
   }, [sendRequest]);
 
   return (
-    <>
+    <div className="container">
       {isLoading && <Spinner size="large" />}
-      <div className="container">
-        {!isLoading && !errorMessage && users && <UsersList users={users} />}
-      </div>
+      <h1 className="title">Community</h1>
+      <p className="text-center md:text-lg text-dark-50">
+        Curious what everyone else is sharing? Dive in and see what your fellow
+        scrollers are posting!
+      </p>
+
+      {!isLoading && !errorMessage && users && <UsersList users={users} />}
 
       <ErrorModal
         open={errorModalOpen}
         message={errorMessage}
         onClose={clearError}
       />
-    </>
+    </div>
   );
 }
 

@@ -24,7 +24,8 @@ function PlaceList({ places, onDelete, isCurrentUser = false }) {
 
   return (
     <div className="container">
-      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
+      <h1 className="title">{isCurrentUser ? "Your Places" : "Places"}</h1>
+      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6 mt-[50px]">
         {places.map((place) => (
           <PlaceItem
             key={place.id}

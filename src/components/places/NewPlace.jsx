@@ -19,6 +19,7 @@ import ErrorModal from "../ErrorModal";
 import { Spinner } from "../Spinner";
 import ImageUploader from "../ImageUploader";
 import { BACKEND_URL } from "@/utils/constants";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   title: z
@@ -100,7 +101,6 @@ function NewPlace() {
 
           {/* Form Card */}
           <div className="bg-white/80 backdrop-blur-sm p-4 lg:p-8 rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-            {isLoading && <Spinner size="large" />}
             <div>
               <Form {...form}>
                 <form
@@ -268,21 +268,32 @@ function NewPlace() {
                     <Button
                       type="submit"
                       className="flex-1 h-12 font-semibold text-base rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                      disabled={isLoading}
                     >
-                      <svg
-                        className="w-5 h-5 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                      Add Place
+                      {isLoading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          Please wait
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        </span>
+                      ) : (
+                        <>
+                          {" "}
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 4v16m8-8H4"
+                            />
+                          </svg>
+                          Add Place
+                        </>
+                      )}
                     </Button>
                   </div>
                 </form>

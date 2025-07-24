@@ -102,14 +102,12 @@ function UpdatePlace() {
   return (
     <>
       {currentPlace && (
-        <div className="flex flex-col items-center justify-center p-4">
+        <div className="flex flex-col items-center justify-center container">
+          <h2 className="title">Update Place</h2>
           <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
-            <h2 className="text-2xl font-bold mb-6 text-center">
-              Update Place
-            </h2>
             <img
-              className="w-full h-full object-cover"
-              src={`${ASSET_URL}/${currentPlace.image}`}
+              className="w-full h-[350px] object-cover"
+              src={currentPlace.image}
               alt={currentPlace.title}
             />
             <Form {...form}>
