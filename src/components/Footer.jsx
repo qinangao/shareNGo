@@ -1,8 +1,11 @@
 function Footer() {
   return (
-    <div className="text-center my-6">
-      <p className="text-dark-50 text-sm">
-        Help fellow travelers discover amazing places! 🌍 ✈️
+    <div className="text-center bg-bg-300">
+      <p className="text-dark-50 text-sm py-5">
+        🌍 ✈️ Show people the most amazing places to visit! | Developed By{" "}
+        <a target="_blank" href="https://qinangao.netlify.app/">
+          Qinan Gao
+        </a>
       </p>
     </div>
   );

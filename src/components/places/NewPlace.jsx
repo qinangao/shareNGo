@@ -88,21 +88,14 @@ function NewPlace() {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center container">
         <div className="w-full max-w-2xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-4 mb-2">
-              <img
-                src="/assets/logo.png"
-                alt="Logo"
-                className="w-12 h-12 rounded-full border-2 border-brand-300 shadow-md bg-white p-1 hover:scale-105 transition-transform"
-              />
-              <h1 className="text-xl lg:text-4xl font-bold text-dark-100">
-                Share Your Adventure
-              </h1>
+              <h1 className="title">Share Your Adventure</h1>
             </div>
-            <p className="text-dark-50 text-lg">
+            <p className="text-center md:text-lg text-dark-50">
               Add a new place and inspire fellow travelers
             </p>
           </div>
@@ -123,7 +116,7 @@ function NewPlace() {
                       <FormItem>
                         <FormLabel className="text-lg font-semibold text-dark-100 flex items-center gap-2">
                           <svg
-                            className="w-5 h-5 text-brand-300"
+                            className="w-5 h-5 text-brand-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -141,7 +134,7 @@ function NewPlace() {
                           <Input
                             {...field}
                             placeholder="e.g., Hidden Beach Paradise, Mountain Vista Cafe..."
-                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-gray-400 focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all duration-200 bg-white/60"
+                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-gray-400 bg-white/60"
                           />
                         </FormControl>
                         <FormMessage className="text-red-100 text-sm mt-2 flex items-center gap-1" />
@@ -156,7 +149,7 @@ function NewPlace() {
                       <FormItem>
                         <FormLabel className="text-lg font-semibold text-dark-100 flex items-center gap-2">
                           <svg
-                            className="w-5 h-5 text-brand-300"
+                            className="w-5 h-5 text-brand-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -179,8 +172,8 @@ function NewPlace() {
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="Street address, city, country..."
-                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-gray-400 focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all duration-200 bg-white/60"
+                            placeholder="e.g., Hidden Beach Paradise, Mountain Vista Cafe..."
+                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-gray-400 bg-white/60"
                           />
                         </FormControl>
                         <FormMessage className="text-red-100 text-sm mt-2 flex items-center gap-1" />
@@ -195,7 +188,7 @@ function NewPlace() {
                       <FormItem>
                         <FormLabel className="text-lg font-semibold text-dark-100 flex items-center gap-2">
                           <svg
-                            className="w-5 h-5 text-brand-300"
+                            className="w-5 h-5 text-brand-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -212,7 +205,7 @@ function NewPlace() {
                         <FormControl>
                           <Textarea
                             {...field}
-                            className="min-h-[140px] border-2 border-gray-200 rounded-xl px-4 py-3 text-base placeholder:text-gray-400 focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all duration-200 bg-white/60 resize-none"
+                            className="min-h-[140px] border-2 border-gray-200 rounded-xl px-4 py-3 text-base placeholder:text-gray-400 bg-white/60 resize-none"
                             placeholder="What makes this place special? Share your memories, tips, or what travelers should know..."
                           />
                         </FormControl>
@@ -227,7 +220,7 @@ function NewPlace() {
                       <FormItem>
                         <FormLabel className="text-lg font-semibold text-dark-100 flex items-center gap-2">
                           <svg
-                            className="w-5 h-5 text-brand-300"
+                            className="w-5 h-5 text-brand-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -276,7 +269,7 @@ function NewPlace() {
                     </Button>
                     <Button
                       type="submit"
-                      className="flex-1 h-12 font-semibold text-base rounded-xl bg-gradient-to-r from-brand-300 to-brand-400 hover:from-brand-400 hover:to-brand-300 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                      className="flex-1 h-12 font-semibold text-base rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                     >
                       <svg
                         className="w-5 h-5 mr-2"

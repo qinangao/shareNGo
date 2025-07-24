@@ -55,6 +55,9 @@ const Navbar = () => {
 
         {/* Desktop menu */}
         <div className="hidden md:flex md:items-center gap-8">
+          <NavLink to="/" className={getNavLinkClass}>
+            Home
+          </NavLink>
           <NavLink to="/user" className={getNavLinkClass}>
             Community
           </NavLink>
@@ -86,17 +89,16 @@ const Navbar = () => {
           id="mobile-menu"
           className="absolute text-center top-16 left-1/2 -translate-x-1/2 w-[90%] bg-white shadow-lg rounded-b-md p-4 flex flex-col gap-4 md:hidden transition-all duration-300"
         >
+          <NavLink to="/" onClick={() => setIsOpen(false)}>
+            Home
+          </NavLink>
           <NavLink to="/user" onClick={() => setIsOpen(false)}>
-            <span className="block text-dark-100 hover:text-brand-300 py-2">
-              Community
-            </span>
+            Community
           </NavLink>
 
           {isLoggedIn && (
             <NavLink to={`/${userId}/places`} onClick={() => setIsOpen(false)}>
-              <span className="block text-dark-100 hover:text-brand-300 py-2">
-                My Places
-              </span>
+              My Places
             </NavLink>
           )}
 

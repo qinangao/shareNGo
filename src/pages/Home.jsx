@@ -17,7 +17,7 @@ function Home() {
       <Link to={path}>
         <Button
           variant="default"
-          className="mt-5 md:mt-[50px]  md:px-10 md:py-6 md:text-lg"
+          className="mt-5 px-8 md:mt-[50px] md:px-10 md:py-6 md:text-lg"
         >
           Get Start
         </Button>

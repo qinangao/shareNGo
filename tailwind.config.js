@@ -21,6 +21,7 @@ const config = {
         bg: {
           100: "#F2F2F2",
           200: "#E4D5BB",
+          300: "#CCD1D1",
         },
         dark: {
           50: "#5E717F",
