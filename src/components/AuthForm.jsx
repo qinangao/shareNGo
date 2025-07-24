@@ -83,7 +83,7 @@ function AuthForm() {
 
       try {
         const data = await sendRequest(endpoint, "POST", formData);
-        console.log(data);
+
         if (data) {
           login(data.userId, data.token);
         }

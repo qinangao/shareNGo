@@ -78,7 +78,7 @@ function NewPlace() {
       const data = await sendRequest(endpoint, "POST", formData, header);
 
       if (data) {
-        navigate("/user"); // ✅ Navigate after successful submission
+        navigate("/user");
       }
     } catch (error) {
       // error is already handled in useHttp (shows modal), but you can log it
@@ -92,9 +92,7 @@ function NewPlace() {
         <div className="w-full max-w-2xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-4 mb-2">
-              <h1 className="title">Share Your Adventure</h1>
-            </div>
+            <h1 className="title">Share Your Adventure</h1>
             <p className="text-center md:text-lg text-dark-50">
               Add a new place and inspire fellow travelers
             </p>
