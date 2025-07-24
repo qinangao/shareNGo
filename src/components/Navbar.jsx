@@ -12,19 +12,19 @@ const Navbar = () => {
   };
 
   const getNavLinkClass = ({ isActive }) =>
-    `py-2 px-4 text-dark-100 ${
-      isActive ? "border-b-2 border-dark-100" : "hover:text-brand-300"
+    `py-2 px-2 text-dark-100 ${
+      isActive ? "text-dark-50" : "hover:text-dark-50"
     }`;
 
   return (
-    <nav className="bg-white border-gray-200 shadow-sm relative z-50">
+    <nav className="border-brand-50 shadow-sm relative z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <NavLink
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img src="/assets/logo.png" className="h-8" alt="Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
+          <span className="font-grechen self-center text-2xl md:text-4xl font-semibold whitespace-nowrap">
             ShareNGo
           </span>
         </NavLink>

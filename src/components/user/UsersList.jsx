@@ -30,17 +30,24 @@ function UsersList({ users }) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-      {users.map((user) => (
-        <UserItem
-          key={user.id}
-          id={user.id}
-          image={user.image}
-          name={user.name}
-          placeCount={user.places.length}
-        />
-      ))}
-    </div>
+    <>
+      <h1 className="title">Community</h1>
+      <p className="text-center md:text-lg text-dark-50">
+        Curious what everyone else is sharing? Dive in and see what your fellow
+        scrollers are posting!
+      </p>
+      <div className="mt-[50px] grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        {users.map((user) => (
+          <UserItem
+            key={user.id}
+            id={user.id}
+            image={user.image}
+            name={user.username}
+            placeCount={user.places.length}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

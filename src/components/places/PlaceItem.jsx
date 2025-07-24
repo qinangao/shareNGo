@@ -53,6 +53,8 @@ function PlaceItem({
   const DESCRIPTION_TRUNCATE_LIMIT = 45;
   const isDescriptionLong = description.length > DESCRIPTION_TRUNCATE_LIMIT;
 
+  console.log(image);
+
   return (
     <>
       <li>
@@ -61,7 +63,7 @@ function PlaceItem({
           <div className="w-full h-64">
             <img
               className="w-full h-full object-cover"
-              src={`${ASSET_URL}/${image}`}
+              src={image}
               alt={title}
             />
           </div>

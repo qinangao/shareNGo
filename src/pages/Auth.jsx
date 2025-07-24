@@ -13,7 +13,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-
 import { Loader2 } from "lucide-react";
 import ErrorModal from "@/components/ErrorModal";
 import { useAuth } from "@/hooks/useAuth";
@@ -38,7 +37,7 @@ const signUpSchema = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters." })
     .max(20, { message: "Password must be at most 20 characters." }),
-  image: z.instanceof(File).optional(),
+  image: z.instanceof(File).optional().nullable(),
 });
 
 function Auth() {
@@ -72,6 +71,8 @@ function Auth() {
       ? `${BACKEND_URL}/users/signup`
       : `${BACKEND_URL}/users/login`;
 
+    console.log("Signup endpoint:", `${BACKEND_URL}/users/signup`);
+
     if (isSignUp && values.image) {
       // Use FormData for file upload
       const formData = new FormData();
@@ -82,7 +83,7 @@ function Auth() {
 
       try {
         const data = await sendRequest(endpoint, "POST", formData);
-
+        console.log(data);
         if (data) {
           login(data.userId, data.token);
         }

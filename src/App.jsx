@@ -6,6 +6,7 @@ import PublicRoute from "./routes/PublicRoute";
 import { AuthContextProvider } from "./hooks/AuthContextProvider";
 import { lazy, Suspense } from "react";
 import { Spinner } from "./components/Spinner";
+import Home from "./pages/Home";
 
 const Auth = lazy(() => import("./pages/Auth"));
 const UserPlaces = lazy(() => import("./pages/UserPlaces"));
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     element: <Applayout />,
     children: [
       // Optional: redirect based on login state
-      { index: true, element: <User /> },
+      { index: true, element: <Home /> },
 
       // Public pages
       {
