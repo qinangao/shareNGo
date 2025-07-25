@@ -19,7 +19,7 @@ function Home() {
           variant="default"
           className="mt-5 px-8 md:mt-[50px] md:px-10 md:py-6 md:text-lg"
         >
-          Get Start
+          Get Started
         </Button>
       </Link>
       <div class="max-w-[1000px] mx-auto mt-[50px]">
