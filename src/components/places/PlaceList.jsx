@@ -11,7 +11,6 @@ function PlaceList({ places, onDelete, isCurrentUser = false }) {
     <div className="container">
       <h1 className="title">{isCurrentUser ? "Your Places" : "Places"}</h1>
 
-      {/* Back to Community link (always shown) */}
       <Link to="/user">
         <LinkButton className="flex items-center my-8">
           <ArrowLeft />

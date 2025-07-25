@@ -7,10 +7,8 @@ function ImageUploader({ onFileSelect, value }) {
   const [isDragAccept, setIsDragAccept] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Sync with form value
   useEffect(() => {
     if (!value) {
-      // Form was reset or value was cleared externally
       if (imagePreview) {
         URL.revokeObjectURL(imagePreview);
         setImagePreview(null);
@@ -27,7 +25,6 @@ function ImageUploader({ onFileSelect, value }) {
     e.stopPropagation();
     setIsDragActive(true);
 
-    // Check if dragged items contain files
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
       const item = e.dataTransfer.items[0];
       if (item.kind === "file" && item.type.startsWith("image/")) {
@@ -63,7 +60,7 @@ function ImageUploader({ onFileSelect, value }) {
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
       setUploadedFiles([file]);
-      onFileSelect?.(file); // Pass file to parent
+      onFileSelect?.(file);
     }
   };
 
@@ -76,7 +73,7 @@ function ImageUploader({ onFileSelect, value }) {
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
         setUploadedFiles([file]);
-        onFileSelect?.(file); // Pass file to parent
+        onFileSelect?.(file);
       }
     }
   };
@@ -92,7 +89,7 @@ function ImageUploader({ onFileSelect, value }) {
     }
     setImagePreview(null);
     setUploadedFiles([]);
-    onFileSelect?.(null); // Clear file in parent
+    onFileSelect?.(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }

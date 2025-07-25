@@ -4,7 +4,6 @@ function Avatar({ name, image, placeCount }) {
       <div className="absolute inset-0 bg-brand-50" />
 
       <div className="relative p-6">
-        {/* Avatar with enhanced styling */}
         <div className="flex justify-center mb-4">
           <div className="relative">
             <img

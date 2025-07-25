@@ -85,7 +85,6 @@ function NewPlace() {
         navigate("/user");
       }
     } catch (error) {
-      // error is already handled in useHttp (shows modal), but you can log it
       console.error("Place creation error:", error);
     }
   };

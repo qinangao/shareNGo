@@ -72,13 +72,11 @@ function AuthForm() {
       : `${BACKEND_URL}/users/login`;
 
     if (isSignUp) {
-      // Always use FormData for signup (with or without image)
       const formData = new FormData();
       formData.append("username", values.username);
       formData.append("email", values.email);
       formData.append("password", values.password);
 
-      // Only append image if it exists
       if (values.image) {
         formData.append("image", values.image);
       }
@@ -93,7 +91,6 @@ function AuthForm() {
         console.error("Auth error:", error);
       }
     } else {
-      // Regular JSON for login only
       const headers = { "Content-Type": "application/json" };
       const body = JSON.stringify({
         email: values.email,

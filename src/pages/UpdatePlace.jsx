@@ -61,7 +61,6 @@ function UpdatePlace() {
     fetchPlace();
   }, [sendRequest, endpoint]);
 
-  // Update form values when currentPlace is loaded
   useEffect(() => {
     if (currentPlace) {
       form.setValue("title", currentPlace.title || "");

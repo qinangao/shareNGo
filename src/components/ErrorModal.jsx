@@ -1,4 +1,3 @@
-// components/ErrorModal.jsx
 import {
   Dialog,
   DialogContent,

@@ -18,7 +18,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <Applayout />,
     children: [
-      // Optional: redirect based on login state
       { index: true, element: <Home /> },
 
       // Public pages

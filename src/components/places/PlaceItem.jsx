@@ -49,7 +49,6 @@ function PlaceItem({
     }
   }
 
-  // How many chars before showing "Read more" toggle
   const DESCRIPTION_TRUNCATE_LIMIT = 40;
   const isDescriptionLong = description.length > DESCRIPTION_TRUNCATE_LIMIT;
 

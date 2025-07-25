@@ -27,7 +27,6 @@ function useHttp() {
           throw new Error(responseData.message || "Request failed!");
         }
 
-        // Use setTimeout to ensure state updates in calling component complete first
         setTimeout(() => setIsLoading(false), 0);
 
         return responseData;
@@ -38,7 +37,6 @@ function useHttp() {
         setErrorMessage(error.message || "Something went wrong.");
         setErrorModalOpen(true);
 
-        // Use setTimeout here too for consistency
         setTimeout(() => setIsLoading(false), 0);
 
         throw error;
