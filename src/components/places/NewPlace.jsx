@@ -134,8 +134,8 @@ function NewPlace() {
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="e.g., Hidden Beach Paradise, Mountain Vista Cafe..."
-                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-gray-400 bg-white/60"
+                            placeholder="e.g., Hidden Beach Paradise..."
+                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base md:placeholder:text-[14px] placeholder:text-[12px] bg-white/60"
                           />
                         </FormControl>
                         <FormMessage className="text-red-100 text-sm mt-2 flex items-center gap-1" />
@@ -173,8 +173,8 @@ function NewPlace() {
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="e.g., Hidden Beach Paradise, Mountain Vista Cafe..."
-                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-gray-400 bg-white/60"
+                            placeholder="e.g., Hidden Beach Paradise..."
+                            className="h-12 border-2 border-gray-200 rounded-xl px-4 text-base placeholder:text-[12px] md:placeholder:text-[14px] bg-white/60"
                           />
                         </FormControl>
                         <FormMessage className="text-red-100 text-sm mt-2 flex items-center gap-1" />
@@ -206,7 +206,7 @@ function NewPlace() {
                         <FormControl>
                           <Textarea
                             {...field}
-                            className="min-h-[140px] border-2 border-gray-200 rounded-xl px-4 py-3 text-base placeholder:text-gray-400 bg-white/60 resize-none"
+                            className="min-h-[140px] border-2 border-gray-200 rounded-xl px-4 py-3 text-base placeholder:text-[12px] md:placeholder:text-[14px] bg-white/60 resize-none"
                             placeholder="What makes this place special? Share your memories, tips, or what travelers should know..."
                           />
                         </FormControl>
