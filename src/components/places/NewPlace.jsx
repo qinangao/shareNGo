@@ -24,14 +24,17 @@ import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   title: z
     .string()
+    .trim()
     .min(5, { message: "Title must be at least 5 characters" })
     .max(50, { message: "Title must be at most 50 characters" }),
   address: z
     .string()
+    .trim()
     .min(5, { message: "Address must be at least 5 characters" })
     .max(100, { message: "Address must be at most 100 characters" }),
   description: z
     .string()
+    .trim()
     .min(5, { message: "Description must be at least 5 characters." })
     .max(200, { message: "Description must be at most 200 characters." }),
   image: z
