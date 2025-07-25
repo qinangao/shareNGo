@@ -117,28 +117,6 @@ Before running this application, ensure you have the following installed:
 - `npm run dev` - Start the development server with nodemon
 - `npm start` - Start the production server
 
-## Project Structure
-
-```
-shareNGo/
-├── frontend/
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Page components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── lib/            # Utility functions
-│   │   └── styles/         # Global styles
-│   ├── public/             # Static assets
-│   └── package.json
-├── backend/
-│   ├── models/             # Database models
-│   ├── routes/             # API routes
-│   ├── middleware/         # Express middleware
-│   ├── config/             # Configuration files
-│   └── package.json
-└── README.md
-```
-
 ## Deployment
 
 ### Frontend (Vercel/Netlify)
@@ -146,7 +124,7 @@ shareNGo/
 1. Build the project: `npm run build`
 2. Deploy the `dist` folder to your hosting platform
 
-### Backend (Render/Railway)
+### Backend (Render)
 
 1. Push your code to GitHub
 2. Connect your repository to your hosting platform
