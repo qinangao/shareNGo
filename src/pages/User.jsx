@@ -24,12 +24,20 @@ function User() {
 
   return (
     <div className="container">
-      {isLoading && <Spinner size="large" />}
       <h1 className="title">Community</h1>
       <p className="text-center md:text-lg text-dark-50">
         Curious what everyone else is sharing? Dive in and see what your fellow
         scrollers are posting!
       </p>
+
+      {isLoading && (
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded md:w-[40%] mx-auto mt-6">
+          <p className="text-yellow-700 text-center">
+            Server is waking up. Please wait a moment...
+          </p>
+          <Spinner size="large" />
+        </div>
+      )}
 
       {!isLoading && !errorMessage && users && <UsersList users={users} />}
 
